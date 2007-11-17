@@ -3,6 +3,12 @@
 	creationComplete="doCreationComplete(event)">
 	<mx:Script>
 		<![CDATA[
+			import model.vo.SiteVO;
+		]]>
+	</mx:Script>
+	<mx:Script>
+		<![CDATA[
+			import model.vo.SiteVO;
 			import model.KioskModelLocator;
 			import util.XMLLoaderUtil;
 			
@@ -13,8 +19,7 @@
 		]]>
 	</mx:Script>
 	<mx:Panel width="100%" height="100%">
-	<mx:List width="100%" height="100%" dataProvider="{KioskModelLocator.getInstance().sites}" labelField="locationName">
-		
+	<mx:List width="100%" height="100%" dataProvider="{KioskModelLocator.getInstance().sites}" itemRenderer="TestIR">
 	</mx:List>	
 	</mx:Panel>
 	

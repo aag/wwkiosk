@@ -4,7 +4,8 @@
 		<locationName>England</locationName>
 		<latitude>0</latitude>
 		<longtitude>0</longtitude>
-		<sourceFiles>test1</sourceFiles>
+		<sourceDir>Adam</sourceDir>
+		<profileImage>portrait.jpg</profileImage>
 		<people>
 			<names>Adam</names>
 			<story>Cool ...</story>
@@ -14,7 +15,8 @@
 		<locationName>Japan</locationName>
 		<latitude>0</latitude>
 		<longtitude>0</longtitude>
-		<sourceFiles>test2</sourceFiles>
+		<sourceDir>Jim</sourceDir>
+		<profileImage>jim_portrait.jpg</profileImage>
 		<people>
 			<names>Jim</names>
 			<story>Boat builder</story>
@@ -24,7 +26,8 @@
 		<locationName>Australia</locationName>
 		<latitude>0</latitude>
 		<longtitude>0</longtitude>
-		<sourceFiles>test3</sourceFiles>
+		<sourceDir>OHOLYJESUS</sourceDir>
+		<profileImage>Barzoni-Black-Jesus-Montage-Vincent-Barzoni.jpeg</profileImage>
 		<people>
 			<names>Jesus</names>
 			<story>Healer</story>

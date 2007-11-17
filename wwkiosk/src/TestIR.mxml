@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" height="300">
+	<mx:Script>
+		<![CDATA[
+			import model.vo.SiteVO;
+		]]>
+	</mx:Script>
+	<mx:Label text="{SiteVO(data).locationName}" />
+	<mx:Image source="{SiteVO(data).profileImagePath}" height="200" width="100%" />
+</mx:HBox>
