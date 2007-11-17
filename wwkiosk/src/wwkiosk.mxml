@@ -1,4 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">
+<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="200" height="200" 
+	creationComplete="doCreationComplete(event)">
+	<mx:Script>
+		<![CDATA[
+			import model.KioskModelLocator;
+			import util.XMLLoaderUtil;
+			
+			private function doCreationComplete(event:Event):void {
+				XMLLoaderUtil.loadSitesData();
+			}
+						
+		]]>
+	</mx:Script>
+	<mx:Panel width="100%" height="100%">
+	<mx:List width="100%" height="100%" dataProvider="{KioskModelLocator.getInstance().sites}" labelField="locationName">
+		
+	</mx:List>	
+	</mx:Panel>
 	
 </mx:WindowedApplication>

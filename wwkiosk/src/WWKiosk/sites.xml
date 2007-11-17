@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sites>
+	<site>
+		<locationName>England</locationName>
+		<latitude>0</latitude>
+		<longtitude>0</longtitude>
+		<sourceFiles>test1</sourceFiles>
+		<people>
+			<names>Adam</names>
+			<story>Cool ...</story>
+		</people>
+	</site>
+	<site>
+		<locationName>Japan</locationName>
+		<latitude>0</latitude>
+		<longtitude>0</longtitude>
+		<sourceFiles>test2</sourceFiles>
+		<people>
+			<names>Jim</names>
+			<story>Boat builder</story>
+		</people>
+	</site>
+	<site>
+		<locationName>Australia</locationName>
+		<latitude>0</latitude>
+		<longtitude>0</longtitude>
+		<sourceFiles>test3</sourceFiles>
+		<people>
+			<names>Jesus</names>
+			<story>Healer</story>
+		</people>
+	</site>
+</sites>
