@@ -46,6 +46,11 @@ package util
 					if (file.name.match(imagesRegExp) && (file.nativePath != site.profileImagePath)){
 						site.galleryImagePaths.addItem(file.nativePath);
 					}
+					
+					var videoRegExp:RegExp = new RegExp("\.mov$", "i");
+					if (file.name.match(videoRegExp)){
+						site.videoPath = file.nativePath;
+					}
 				}
 			}
 		}

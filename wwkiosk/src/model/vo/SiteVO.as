@@ -3,7 +3,6 @@ package model.vo
 	import com.adobe.cairngorm.vo.IValueObject;
 	
 	import mx.collections.ArrayCollection;
-	import mx.controls.Image;
 	
 	[Bindable]
 	public class SiteVO implements IValueObject
@@ -15,5 +14,6 @@ package model.vo
 		public var people:PeopleVO;
 		public var profileImagePath:String;
 		public var galleryImagePaths:ArrayCollection;
+		public var videoPath:String;
 	}
 }

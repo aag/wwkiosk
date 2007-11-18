@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="200" height="200" 
+<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:comp="views.components.*" layout="absolute" width="800" height="600" 
 	creationComplete="doCreationComplete(event)">
 	<mx:Script>
 		<![CDATA[
@@ -8,19 +8,35 @@
 	</mx:Script>
 	<mx:Script>
 		<![CDATA[
+			import views.components.H264Video;
+			import mx.core.Application;
 			import model.vo.SiteVO;
 			import model.KioskModelLocator;
 			import util.XMLLoaderUtil;
 			
 			private function doCreationComplete(event:Event):void {
 				XMLLoaderUtil.loadSitesData();
+				
+				//mx.core.Application.application.stage.displayState = StageDisplayState.FULL_SCREEN;
 			}
-						
+			
+			private function addVideo(event:Event):void {
+				var vid:H264Video = new H264Video();
+				vid.x = 10;
+				vid.y = 10;
+				mx.core.Application.application.stage.addChild(vid);
+				vid.filePath = "C:\Documents and Settings\User\My Documents\WWKiosk\Jim\Batman_Begins.mov";
+			}
+			
 		]]>
 	</mx:Script>
-	<mx:Panel width="100%" height="100%">
-	<mx:List width="100%" height="100%" dataProvider="{KioskModelLocator.getInstance().sites}" itemRenderer="TestIR">
-	</mx:List>	
+	<mx:Panel id="pnlMain" height="100%" width="100%">
+		<mx:Label text="{SiteVO(KioskModelLocator.getInstance().sites.getItemAt(1)).videoPath}" selectable="true" />
+		<!-- mx:VideoDisplay id="vid" width="100%" height="100%" source="{SiteVO(KioskModelLocator.getInstance().sites.getItemAt(0)).videoPath}" autoPlay="true" /-->
+		<!-- comp:H264Video id="vid1" x="10" y="10" width="100%" height="100%" filePath="C:\Documents and Settings\User\My Documents\WWKiosk\Jim\Batman_Begins.mov"  /-->
+		<mx:VideoDisplay id="vid2" width="100%" height="100%" source="{SiteVO(KioskModelLocator.getInstance().sites.getItemAt(1)).videoPath}" autoPlay="true" />
+		<mx:Button label="Full Screen" click="mx.core.Application.application.stage.displayState = StageDisplayState.FULL_SCREEN;" />
+		<mx:Button label="Play" click="addVideo(event)" />
 	</mx:Panel>
 	
 </mx:WindowedApplication>
