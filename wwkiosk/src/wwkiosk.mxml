@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:comp="views.components.*" layout="absolute" width="800" height="600" 
-	creationComplete="doCreationComplete(event)">
+	creationComplete="doCreationComplete(event)" xmlns:views="views.*">
 	<mx:Script>
 		<![CDATA[
 			import model.vo.SiteVO;
@@ -16,7 +16,6 @@
 			
 			private function doCreationComplete(event:Event):void {
 				XMLLoaderUtil.loadSitesData();
-				
 				//mx.core.Application.application.stage.displayState = StageDisplayState.FULL_SCREEN;
 			}
 			
@@ -30,13 +29,14 @@
 			
 		]]>
 	</mx:Script>
-	<mx:Panel id="pnlMain" height="100%" width="100%">
-		<mx:Label text="{SiteVO(KioskModelLocator.getInstance().sites.getItemAt(1)).videoPath}" selectable="true" />
+	<mx:ViewStack id="vwMain" height="100%" width="100%">
+		<views:MapVW />
+		<!-- mx:Label text="{SiteVO(KioskModelLocator.getInstance().sites.getItemAt(1)).videoPath}" selectable="true" /-->
 		<!-- mx:VideoDisplay id="vid" width="100%" height="100%" source="{SiteVO(KioskModelLocator.getInstance().sites.getItemAt(0)).videoPath}" autoPlay="true" /-->
 		<!-- comp:H264Video id="vid1" x="10" y="10" width="100%" height="100%" filePath="C:\Documents and Settings\User\My Documents\WWKiosk\Jim\Batman_Begins.mov"  /-->
-		<mx:VideoDisplay id="vid2" width="100%" height="100%" source="{SiteVO(KioskModelLocator.getInstance().sites.getItemAt(1)).videoPath}" autoPlay="true" />
-		<mx:Button label="Full Screen" click="mx.core.Application.application.stage.displayState = StageDisplayState.FULL_SCREEN;" />
-		<mx:Button label="Play" click="addVideo(event)" />
-	</mx:Panel>
+		<!-- mx:VideoDisplay id="vid2" width="100%" height="100%" source="{SiteVO(KioskModelLocator.getInstance().sites.getItemAt(1)).videoPath}" autoPlay="true" /-->
+		<!-- mx:Button label="Full Screen" click="mx.core.Application.application.stage.displayState = StageDisplayState.FULL_SCREEN;" /-->
+		<!-- mx:Button label="Play" click="addVideo(event)" /-->
+	</mx:ViewStack>
 	
 </mx:WindowedApplication>
