@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" width="50%" height="80%" creationComplete="doCreationComplete(event)">
+	<mx:Script>
+		<![CDATA[
+			import util.XMLLoaderUtil;
+			import model.KioskModelLocator;
+			import model.vo.SiteVO;
+			
+			private function doCreationComplete(event:Event):void {
+				XMLLoaderUtil.loadSitesData();
+			}
+		]]>
+	</mx:Script>
+	<mx:VBox height="100%" width="15%">
+		<mx:List id="lstSites" left="0" width="100%" height="100%" bottom="0" top="0" labelField="locationName" dataProvider="{KioskModelLocator.getInstance().sites}" selectedIndex="0" />
+		<mx:HBox width="100%" height="30">
+			<mx:Button label="Add" />
+			<mx:Button label="Remove" />
+		</mx:HBox>
+	</mx:VBox>
+	
+	<mx:Form width="85%" height="100%">
+		<mx:FormItem label="Missionaries' Name(s):" width="100%">
+			<mx:TextInput text="{SiteVO(lstSites.selectedItem).people.names}" width="100%" />
+		</mx:FormItem>
+		
+		<mx:FormItem label="Missionaries' Location:" width="100%">
+			<mx:TextInput text="{SiteVO(lstSites.selectedItem).locationName}" width="100%" />
+		</mx:FormItem>
+		
+		<mx:FormItem label="Sub-Directory Name:" width="100%">
+			<mx:TextInput text="{SiteVO(lstSites.selectedItem).sourceDir}" width="50%" />
+			<mx:Button label="Choose Directory" />
+		</mx:FormItem>
+		
+		<mx:FormItem label="Location:" width="100%">
+			<mx:Button label="Choose Location" />
+		</mx:FormItem>
+	</mx:Form>
+</mx:HBox>

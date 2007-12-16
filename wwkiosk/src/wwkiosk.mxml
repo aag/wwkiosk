@@ -3,11 +3,6 @@
 	creationComplete="doCreationComplete(event)" xmlns:views="views.*">
 	<mx:Script>
 		<![CDATA[
-			import model.vo.SiteVO;
-		]]>
-	</mx:Script>
-	<mx:Script>
-		<![CDATA[
 			import views.components.H264Video;
 			import mx.core.Application;
 			import model.vo.SiteVO;
@@ -16,6 +11,7 @@
 			
 			private function doCreationComplete(event:Event):void {
 				XMLLoaderUtil.loadSitesData();
+				Shell.shell.addEventListener(InvokeEvent.INVOKE, onInvoke);
 				//mx.core.Application.application.stage.displayState = StageDisplayState.FULL_SCREEN;
 			}
 			
@@ -27,10 +23,29 @@
 				vid.filePath = "C:\Documents and Settings\User\My Documents\WWKiosk\Jim\Batman_Begins.mov";
 			}
 			
+			private function onInvoke(event:InvokeEvent):void
+			{
+				//arguments passed to app are stored as array in event.arguments
+				var args:String;
+				args = "Invoke : " + event.arguments + "\n";
+				var launchAdminInterface:Boolean = false;
+				for each (var arg:String in event.arguments){
+					if (arg.toUpperCase() == "/ADMIN"){
+						launchAdminInterface = true;
+						break;
+					}
+				}
+				
+				if (launchAdminInterface){
+					vwMain.selectedIndex = 1;
+				}
+			}
+			
 		]]>
 	</mx:Script>
 	<mx:ViewStack id="vwMain" height="100%" width="100%">
 		<views:MapVW />
+		<views:AdminVW />
 		<!-- mx:Label text="{SiteVO(KioskModelLocator.getInstance().sites.getItemAt(1)).videoPath}" selectable="true" /-->
 		<!-- mx:VideoDisplay id="vid" width="100%" height="100%" source="{SiteVO(KioskModelLocator.getInstance().sites.getItemAt(0)).videoPath}" autoPlay="true" /-->
 		<!-- comp:H264Video id="vid1" x="10" y="10" width="100%" height="100%" filePath="C:\Documents and Settings\User\My Documents\WWKiosk\Jim\Batman_Begins.mov"  /-->
