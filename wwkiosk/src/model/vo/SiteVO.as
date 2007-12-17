@@ -8,8 +8,8 @@ package model.vo
 	public class SiteVO implements IValueObject
 	{
 		public var locationName:String;
-		public var latitude:Number;
-		public var longtitude:Number;
+		public var xPosition:Number;
+		public var yPosition:Number;
 		public var sourceDir:String;
 		public var people:PeopleVO;
 		public var profileImagePath:String;

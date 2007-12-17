@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" width="175" height="75" xmlns:components="views.components.*" backgroundColor="#FFFFFF" >
+	<mx:Script>
+		<![CDATA[
+			import model.vo.SiteVO;
+			
+			[Bindable]
+			public var site:SiteVO;
+		]]>
+	</mx:Script>
+	<components:SmoothImage source="{site.profileImagePath}" height="75" />
+	<mx:VBox>
+		<mx:Label text="{site.people.names}" />
+		<mx:Label text="{site.locationName}" />
+	</mx:VBox>
+</mx:HBox>

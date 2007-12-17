@@ -2,8 +2,8 @@
 <sites>
 	<site>
 		<locationName>England</locationName>
-		<latitude>0</latitude>
-		<longtitude>0</longtitude>
+		<xPosition>400</xPosition>
+		<yPosition>100</yPosition>
 		<sourceDir>Adam</sourceDir>
 		<profileImage>portrait.jpg</profileImage>
 		<people>
@@ -13,8 +13,8 @@
 	</site>
 	<site>
 		<locationName>Japan</locationName>
-		<latitude>0</latitude>
-		<longtitude>0</longtitude>
+		<xPosition>50</xPosition>
+		<yPosition>50</yPosition>
 		<sourceDir>Jim</sourceDir>
 		<profileImage>jim_portrait.jpg</profileImage>
 		<people>
@@ -24,8 +24,8 @@
 	</site>
 	<site>
 		<locationName>Australia</locationName>
-		<latitude>0</latitude>
-		<longtitude>0</longtitude>
+		<xPosition>800</xPosition>
+		<yPosition>400</yPosition>
 		<sourceDir>OHOLYJESUS</sourceDir>
 		<profileImage>Barzoni-Black-Jesus-Montage-Vincent-Barzoni.jpeg</profileImage>
 		<people>

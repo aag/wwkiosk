@@ -23,8 +23,8 @@ package util
 				for each(var site:XML in sitesXML.site) {
 					var vo:SiteVO = new SiteVO();
 					vo.locationName = site.locationName;
-					vo.latitude = site.latitude;
-					vo.longtitude = site.longitude;
+					vo.xPosition = site.xPosition;
+					vo.yPosition = site.yPosition;
 					vo.sourceDir = site.sourceDir;
 					vo.profileImagePath = File.documentsDirectory.resolvePath("WWKiosk").nativePath + "/" + site.sourceDir + "/" + site.profileImage;
 					var p:PeopleVO = new PeopleVO();

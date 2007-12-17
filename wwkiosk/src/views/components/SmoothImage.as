@@ -1,4 +1,4 @@
-package info.emantis.view.component
+package views.components
 {
 	import flash.display.Bitmap;
 	import flash.display.Loader;
