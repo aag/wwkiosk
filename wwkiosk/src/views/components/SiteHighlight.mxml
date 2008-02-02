@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" width="275" height="300" xmlns:components="views.components.*" styleName="roundedPanel" borderAlpha="1" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" width="275" height="300" xmlns:components="views.components.*" 
+	styleName="roundedPanel" borderAlpha="1" horizontalScrollPolicy="off" verticalScrollPolicy="off"
+	useHandCursor="true" buttonMode="true" mouseChildren="false" click="doClick(event)">
 	<mx:Script>
 		<![CDATA[
+			import mx.core.Application;
 			import model.vo.SiteVO;
 			
 			[Bindable]
 			public var site:SiteVO;
+			
+			private function doClick(event:Event):void {
+				Application.application.showSiteProfile(site);
+			}
+			
 		]]>
 	</mx:Script>
 	<mx:Style>
