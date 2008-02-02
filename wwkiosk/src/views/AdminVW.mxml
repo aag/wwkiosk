@@ -19,22 +19,47 @@
 		</mx:HBox>
 	</mx:VBox>
 	
-	<mx:Form width="85%" height="100%">
-		<mx:FormItem label="Missionaries' Name(s):" width="100%">
-			<mx:TextInput text="{SiteVO(lstSites.selectedItem).people.names}" width="100%" />
-		</mx:FormItem>
-		
-		<mx:FormItem label="Missionaries' Location:" width="100%">
-			<mx:TextInput text="{SiteVO(lstSites.selectedItem).locationName}" width="100%" />
-		</mx:FormItem>
-		
-		<mx:FormItem label="Sub-Directory Name:" width="100%">
-			<mx:TextInput text="{SiteVO(lstSites.selectedItem).sourceDir}" width="50%" />
-			<mx:Button label="Choose Directory" />
-		</mx:FormItem>
-		
-		<mx:FormItem label="Location:" width="100%">
-			<mx:Button label="Choose Location" />
-		</mx:FormItem>
-	</mx:Form>
+	<mx:VBox height="100%" width="85%">
+		<mx:Form width="100%" height="100%">
+			<mx:FormItem label="Missionaries' Name(s):" width="100%">
+				<mx:TextInput text="{SiteVO(lstSites.selectedItem).people.names}" width="100%" />
+			</mx:FormItem>
+			
+			<mx:FormItem label="Missionaries' Location:" width="100%">
+				<mx:TextInput text="{SiteVO(lstSites.selectedItem).locationName}" width="100%" />
+			</mx:FormItem>
+			
+			<mx:FormItem label="Thumbnail Picture:" width="100%">
+				<mx:TextInput text="{SiteVO(lstSites.selectedItem).profileImagePath}" width="100%" />
+				<mx:Button label="Choose Image" />
+			</mx:FormItem>
+			
+			<mx:FormItem label="Sub-Directory Name:" width="100%">
+				<mx:TextInput text="{SiteVO(lstSites.selectedItem).sourceDir}" width="100%" />
+				<mx:Button label="Choose Directory" />
+			</mx:FormItem>
+			
+			<mx:FormItem label="Map Marker:" width="100%">
+				<mx:Button label="Choose Location" />
+			</mx:FormItem>
+			
+			<mx:FormItem label="Video:" width="100%">
+				<mx:TextInput text="{SiteVO(lstSites.selectedItem).videoPath}" width="100%" />
+				<mx:Button label="Choose Video File" />
+			</mx:FormItem>
+			
+			<mx:FormItem label="Story:" width="100%" height="100%">
+				<mx:TextArea text="{SiteVO(lstSites.selectedItem).people.story}" width="100%" height="100%" />
+			</mx:FormItem>
+		</mx:Form>
+
+		<mx:HBox height="30" width="100%">
+			<mx:Spacer width="100%" />
+			<mx:Button label="Save" />
+			<mx:Button label="Cancel" />
+			<mx:Spacer width="10" />
+		</mx:HBox>
+
+	</mx:VBox>
+
 </mx:HBox>
