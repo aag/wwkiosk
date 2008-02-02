@@ -35,7 +35,7 @@
 	</mx:Style>
 	<mx:VBox>
 		<mx:HBox>
-			<components:SmoothImage source="{site.profileImagePath}" width="120" scaleContent="true"/>
+			<components:SmoothImage source="{site.profileImagePath}" width="120" />
 			<mx:VBox>
 				<mx:Label fontSize="16" fontWeight="bold" text="{site.people.names}" />
 				<mx:Label fontSize="12" text="{site.locationName}" />
