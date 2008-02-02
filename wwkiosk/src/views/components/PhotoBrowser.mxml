@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:components="views.components.*">
+	<mx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			
+			[Bindable]
+			public var dataProvider:ArrayCollection;
+			
+			private function doClick(event:Event):void {
+				
+			}
+			
+		]]>
+	</mx:Script>
+	<mx:TileList dataProvider="{dataProvider}">
+		<mx:itemRenderer>
+			<mx:Component>
+				<components:SmoothImage source="{data}" />
+			</mx:Component>
+		</mx:itemRenderer>	
+	</mx:TileList>
+	<mx:HBox verticalAlign="middle">
+		<mx:Button label="Back" click="doClick(event)" />
+		<components:SmoothImage />
+		<mx:Button label="Forward" click="doClick(event)" />		
+	</mx:HBox>
+</mx:VBox>

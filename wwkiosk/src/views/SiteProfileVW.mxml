@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%">
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" xmlns:components="views.components.*">
 	<mx:Script>
 		<![CDATA[
 			import mx.core.Application;
@@ -14,6 +14,23 @@
 			
 		]]>
 	</mx:Script>
-	<mx:Label text="{site.people.names}" />
-	<mx:Button label="Back to map" click="doClick(event)" />
+	<mx:HBox>
+		<components:SmoothImage source="{site.profileImagePath}" />
+		<mx:VBox>
+			<mx:Label text="{site.people.names}" fontWeight="bold" />
+			<mx:Label text="{site.locationName}" />
+		</mx:VBox>
+		<mx:ToggleButtonBar dataProvider="{vsSiteProfile}" />
+		<mx:Button label="Back to map" click="doClick(event)" />
+	</mx:HBox>
+	
+	<mx:ViewStack id="vsSiteProfile" height="80%" width="100%">
+		<mx:HBox label="Story" id="vStory">
+			
+		</mx:HBox>
+		<components:PhotoBrowser id="vPhotos" label="Photos" dataProvider="{site.galleryImagePaths}" />
+		<mx:HBox label="Video" id="vVideo">
+			
+		</mx:HBox>
+	</mx:ViewStack>
 </mx:VBox>
