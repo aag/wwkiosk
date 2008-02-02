@@ -8,7 +8,7 @@
 			[Bindable]
 			public var site:SiteVO;
 			
-			private function doClick(event):void {
+			private function doClick(event:Event):void {
 				Application.application.showMap();
 			}
 			
