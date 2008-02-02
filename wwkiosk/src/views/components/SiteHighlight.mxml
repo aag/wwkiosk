@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" width="275" height="300" xmlns:components="views.components.*" styleName="roundedPanel" borderAlpha="1">
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" width="275" height="300" xmlns:components="views.components.*" styleName="roundedPanel" borderAlpha="1" horizontalScrollPolicy="off" verticalScrollPolicy="off">
 	<mx:Script>
 		<![CDATA[
 			import model.vo.SiteVO;
@@ -8,7 +8,6 @@
 			public var site:SiteVO;
 		]]>
 	</mx:Script>
-	<components:SmoothImage source="{site.profileImagePath}" height="75" />
 	<mx:Style>
 		.roundedPanel {
 		   corner-radius: 20;
@@ -27,7 +26,12 @@
 		}
 	</mx:Style>
 	<mx:VBox>
-		<mx:Label text="{site.people.names}" />
-		<mx:Label text="{site.locationName}" />
+		<mx:HBox>
+			<components:SmoothImage source="{site.profileImagePath}" width="120" scaleContent="true"/>
+			<mx:VBox>
+				<mx:Label fontSize="16" fontWeight="bold" text="{site.people.names}" />
+				<mx:Label fontSize="12" text="{site.locationName}" />
+			</mx:VBox>
+		</mx:HBox>
 	</mx:VBox>
 </mx:Panel>
