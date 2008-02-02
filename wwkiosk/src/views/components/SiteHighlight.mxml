@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" width="175" height="75" xmlns:components="views.components.*" backgroundColor="#FFFFFF" >
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" width="275" height="300" xmlns:components="views.components.*" styleName="roundedPanel" borderAlpha="1">
 	<mx:Script>
 		<![CDATA[
 			import model.vo.SiteVO;
@@ -9,8 +9,25 @@
 		]]>
 	</mx:Script>
 	<components:SmoothImage source="{site.profileImagePath}" height="75" />
+	<mx:Style>
+		.roundedPanel {
+		   corner-radius: 20;
+		   header-height: 0;
+		   panel-border-style: roundCorners;
+		   shadow-distance: 50;
+		   shadow-direction: right;
+		   background-color: #ffffff;
+		   roundedBottomCorners: true;
+		   header-colors: #ffffff, #ffffff;
+		   border-color: #ffffff;
+		   paddingTop: 20;
+		   border-thickness-left: 20;
+		   border-thickness-right: 20;
+		   border-thickness-bottom: 20;
+		}
+	</mx:Style>
 	<mx:VBox>
 		<mx:Label text="{site.people.names}" />
 		<mx:Label text="{site.locationName}" />
 	</mx:VBox>
-</mx:HBox>
+</mx:Panel>
