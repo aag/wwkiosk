@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<components:SmoothImage xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:components="views.components.*"
+	source="images/pin_with_shadow.png">
+	<mx:Script>
+		<![CDATA[
+			import model.vo.SiteVO;
+			
+			[Bindable]
+			public var site:SiteVO;
+			
+		]]>
+	</mx:Script>
+</components:SmoothImage>

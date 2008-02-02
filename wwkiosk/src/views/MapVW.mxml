@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" 
-	xmlns:component="info.emantis.view.component.*" creationComplete="doShow(event)">
+	xmlns:component="info.emantis.view.component.*" creationComplete="doCreationComplete(event)">
 	<mx:Script>
 		<![CDATA[
+			import views.components.SitePin;
 			import model.vo.SiteVO;
 			import model.KioskModelLocator;
 			import views.components.SiteHighlight;
@@ -19,13 +20,13 @@
 			private var highlightTimer:Timer;
 			private var currentHighlight:SiteHighlight;
 			
-			public function doShow(event:Event):void {
+			private function doCreationComplete(event:Event):void {
             	this.highlightTimer = new Timer(HIGHLIGHT_DELAY, 0 );
             	this.highlightTimer.addEventListener( "timer" , showNextHighlight );
             	this.highlightTimer.start();
         	}
 
-        	public function showNextHighlight(event:TimerEvent):void {
+        	private function showNextHighlight(event:TimerEvent):void {
         		var index:int = 0;
         		if(this.currentHighlight) {
         			index = KioskModelLocator.getInstance().sites.getItemIndex(currentHighlight.site);
@@ -38,6 +39,17 @@
 				currentHighlight.y = currentHighlight.site.yPosition;
 				this.addChild(currentHighlight);
         	}
+				
+			public function layoutPins():void {
+				for(var i:int=0; i < KioskModelLocator.getInstance().sites.length; i++) {
+					var site:SiteVO = SiteVO(KioskModelLocator.getInstance().sites.getItemAt(i));
+					var pin:SitePin = new SitePin();
+					pin.site = site;
+					pin.x = site.xPosition;
+					pin.y = site.yPosition;
+					this.addChild(pin);
+				}
+			}
 			
 		]]>
 	</mx:Script>

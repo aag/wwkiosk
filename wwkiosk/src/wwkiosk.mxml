@@ -13,6 +13,7 @@
 				XMLLoaderUtil.loadSitesData();
 				NativeApplication.nativeApplication.addEventListener(InvokeEvent.INVOKE, onInvoke);
 				//mx.core.Application.application.stage.displayState = StageDisplayState.FULL_SCREEN;
+				vMap.layoutPins();
 			}
 			
 			private function addVideo(event:Event):void {
@@ -44,7 +45,7 @@
 		]]>
 	</mx:Script>
 	<mx:ViewStack id="vwMain" height="100%" width="100%">
-		<views:MapVW />
+		<views:MapVW id="vMap" />
 		<views:AdminVW />
 		<!-- mx:Label text="{SiteVO(KioskModelLocator.getInstance().sites.getItemAt(1)).videoPath}" selectable="true" /-->
 		<!-- mx:VideoDisplay id="vid" width="100%" height="100%" source="{SiteVO(KioskModelLocator.getInstance().sites.getItemAt(0)).videoPath}" autoPlay="true" /-->
