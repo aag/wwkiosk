@@ -11,7 +11,7 @@
 			
 			private function doCreationComplete(event:Event):void {
 				XMLLoaderUtil.loadSitesData();
-				Shell.shell.addEventListener(InvokeEvent.INVOKE, onInvoke);
+				NativeApplication.nativeApplication.addEventListener(InvokeEvent.INVOKE, onInvoke);
 				//mx.core.Application.application.stage.displayState = StageDisplayState.FULL_SCREEN;
 			}
 			
