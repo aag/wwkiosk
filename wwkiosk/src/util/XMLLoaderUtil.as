@@ -9,6 +9,7 @@ package util
 	import model.vo.SiteVO;
 	
 	import mx.collections.ArrayCollection;
+	import mx.controls.Alert;
 	
 	public class XMLLoaderUtil
 	{
@@ -34,7 +35,9 @@ package util
 					KioskModelLocator.getInstance().sites.addItem(vo);
 				}
 				loadSiteDirs();
-			} 
+			} else {
+				mx.controls.Alert.show("Unable to load kiosk data from " + File.documentsDirectory.resolvePath("WWKiosk/sites.xml").toString());
+			}
 		}
 		
 		public static function loadSiteDirs():void{

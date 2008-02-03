@@ -13,16 +13,16 @@
 			
 		]]>
 	</mx:Script>
-	<mx:TileList dataProvider="{dataProvider}">
+	<mx:TileList id="tlThumbnails" dataProvider="{dataProvider}" width="100%" height="150">
 		<mx:itemRenderer>
 			<mx:Component>
 				<components:SmoothImage source="{data}" />
 			</mx:Component>
 		</mx:itemRenderer>	
 	</mx:TileList>
-	<mx:HBox verticalAlign="middle">
+	<mx:HBox verticalAlign="middle" width="100%" height="100%">
 		<mx:Button label="Back" click="doClick(event)" />
-		<components:SmoothImage />
+		<components:SmoothImage source="{tlThumbnails.selectedItem}" height="100%" />
 		<mx:Button label="Forward" click="doClick(event)" />		
 	</mx:HBox>
 </mx:VBox>

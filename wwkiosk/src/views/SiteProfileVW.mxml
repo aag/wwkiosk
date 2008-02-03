@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" xmlns:components="views.components.*">
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml"  xmlns:components="views.components.*"
+	horizontalScrollPolicy="off" verticalScrollPolicy="off"
+	width="100%" height="100%">
 	<mx:Script>
 		<![CDATA[
 			import mx.core.Application;
@@ -14,21 +16,21 @@
 			
 		]]>
 	</mx:Script>
-	<mx:HBox>
-		<components:SmoothImage source="{site.profileImagePath}" />
-		<mx:VBox>
-			<mx:Label text="{site.people.names}" fontWeight="bold" />
-			<mx:Label text="{site.locationName}" />
-		</mx:VBox>
-		<mx:ToggleButtonBar dataProvider="{vsSiteProfile}" />
-		<mx:Button label="Back to map" click="doClick(event)" />
-	</mx:HBox>
+	<mx:Canvas width="100%" height="200">
+		<components:SmoothImage source="{site.profileImagePath}" id="imgProfile" 
+			height="100%" top="10" left="10" />
+		<mx:Label text="{site.people.names}" fontWeight="bold" top="10" right="10" />
+		<mx:Label text="{site.locationName}"  top="30" right="10" />
+		<mx:ToggleButtonBar dataProvider="{vsSiteProfile}" bottom="10" right="50" />
+		<mx:Button label="Back to map" click="doClick(event)" bottom="10" right="10" />
+	</mx:Canvas>
 	
 	<mx:ViewStack id="vsSiteProfile" height="80%" width="100%">
 		<mx:HBox label="Story" id="vStory">
 			
 		</mx:HBox>
-		<components:PhotoBrowser id="vPhotos" label="Photos" dataProvider="{site.galleryImagePaths}" />
+		<components:PhotoBrowser id="vPhotos" label="Photos" 
+			dataProvider="{site.galleryImagePaths}" width="100%" />
 		<mx:HBox label="Video" id="vVideo">
 			
 		</mx:HBox>
