@@ -53,5 +53,5 @@
 			
 		]]>
 	</mx:Script>
-	<mx:Image source="{map}" width="100%" left="0" right="0" maintainAspectRatio="true" scaleContent="true" scaleY="1.9" scaleX="1.9" verticalAlign="middle" horizontalAlign="center"/>
+	<mx:Image source="{map}" width="100%" left="0" right="0" maintainAspectRatio="true" scaleContent="true" scaleY="1.4" scaleX="1.4" verticalAlign="middle" horizontalAlign="center"/>
 </mx:Canvas>
