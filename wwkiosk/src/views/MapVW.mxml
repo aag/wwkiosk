@@ -16,9 +16,9 @@
 			[Embed(source="images/continents.svg")]
 			[Bindable]
 			private var map:Class;
-			
 			private var highlightTimer:Timer;
-			private var currentHighlight:SiteHighlight;
+			private var currentHighlight:int;
+			private var allHighlights:Array;
 			
 			private function doCreationComplete(event:Event):void {
             	this.highlightTimer = new Timer(HIGHLIGHT_DELAY, 0 );
@@ -26,19 +26,39 @@
             	this.highlightTimer.start();
         	}
 
-        	private function showNextHighlight(event:TimerEvent):void {
-        		var index:int = 0;
-        		if(this.currentHighlight) {
-        			index = KioskModelLocator.getInstance().sites.getItemIndex(currentHighlight.site);
-        			this.removeChild(currentHighlight);
-        		}
-				index < KioskModelLocator.getInstance().sites.length-1?index++:index=0;
-				currentHighlight = new SiteHighlight();
-				currentHighlight.site = SiteVO(KioskModelLocator.getInstance().sites.getItemAt(index));
-				currentHighlight.x = currentHighlight.site.xPosition;
-				currentHighlight.y = currentHighlight.site.yPosition;
-				this.addChild(currentHighlight);
-        	}
+			private function showNextHighlight(event:TimerEvent):void {
+				if (allHighlights == null){
+					// Do lazy construction, because the sites aren't available at doCreationComplete() time.
+					constructHighlights();
+				}
+				
+				allHighlights[currentHighlight].visible = false;
+				
+				// Increment the current highlight number, wrapping at the end
+				currentHighlight < (KioskModelLocator.getInstance().sites.length - 1) ? currentHighlight++ : currentHighlight = 0;
+				
+				allHighlights[currentHighlight].visible = true;
+			}
+
+			private function constructHighlights():void {
+				currentHighlight = 0;
+				allHighlights = new Array();
+				
+				var i:int;
+				var numSites:int = KioskModelLocator.getInstance().sites.length;
+				
+				for (i = 0; i < numSites; i++){
+					var aHighlight:SiteHighlight = new SiteHighlight();
+					
+					aHighlight.site = SiteVO(KioskModelLocator.getInstance().sites.getItemAt(i));
+					aHighlight.x = aHighlight.site.xPosition;
+					aHighlight.y = aHighlight.site.yPosition;
+					aHighlight.visible = false;
+					
+					this.addChild(aHighlight);
+					allHighlights.push(aHighlight);
+				}
+			}
 				
 			public function layoutPins():void {
 				for(var i:int=0; i < KioskModelLocator.getInstance().sites.length; i++) {
