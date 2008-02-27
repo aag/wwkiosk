@@ -22,7 +22,7 @@
 			
 			private function doAddSite(event:Event):void {
 				var newSite:SiteVO = new SiteVO();
-				newSite.locationName = "new site";
+				newSite.locationName = "New Site";
 				KioskModelLocator.getInstance().sites.addItem(newSite);
 			}
 			
@@ -52,7 +52,7 @@
 	<mx:VBox height="100%" width="85%">
 		<mx:Form width="100%" height="100%">
 			<mx:FormItem label="Missionaries' Name(s):" width="100%">
-				<mx:TextInput text="{SiteVO(lstSites.selectedItem).people.names}" width="100%" />
+				<mx:TextInput id="nameinput" text="{SiteVO(lstSites.selectedItem).people.names}" width="100%" />
 			</mx:FormItem>
 			
 			<mx:FormItem label="Missionaries' Location:" width="100%">
