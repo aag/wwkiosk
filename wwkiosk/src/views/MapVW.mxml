@@ -27,6 +27,11 @@
         	}
 
 			private function showNextHighlight(event:TimerEvent):void {
+				// The map isn't showing
+				if (!this.visible){
+					return;
+				}
+				
 				if (allHighlights == null){
 					// Do lazy construction, because the sites aren't available at doCreationComplete() time.
 					constructHighlights();
