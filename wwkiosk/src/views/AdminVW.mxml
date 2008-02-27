@@ -5,17 +5,47 @@
 			import util.XMLLoaderUtil;
 			import model.KioskModelLocator;
 			import model.vo.SiteVO;
+			import mx.controls.Alert;
+			import mx.events.CloseEvent;
 			
 			private function doCreationComplete(event:Event):void {
 				XMLLoaderUtil.loadSitesData();
+			}
+			
+			private function doSaveFormToModel(event:Event):void {
+				mx.controls.Alert.show("Implement save form");
+			}
+			
+			private function doRevertFormToModel(event:Event):void {
+				mx.controls.Alert.show("Implement cancel input");
+			}
+			
+			private function doAddSite(event:Event):void {
+				var newSite:SiteVO = new SiteVO();
+				newSite.locationName = "new site";
+				KioskModelLocator.getInstance().sites.addItem(newSite);
+			}
+			
+			private function doRemoveSite(event:Event):void {
+				var result:Alert = Alert.show("Are you sure you want to remove this site?", "Confirm Remove", Alert.OK | Alert.CANCEL, this, removeClickHandler);
+			}
+			
+			private function removeClickHandler(event:CloseEvent):void {
+				if (event.detail == Alert.OK){
+					var selectedSite:SiteVO = lstSites.selectedItem as SiteVO;
+					if (selectedSite != null){
+						var selectedIndex:int = KioskModelLocator.getInstance().sites.getItemIndex(selectedSite);
+						KioskModelLocator.getInstance().sites.removeItemAt(selectedIndex);
+					}
+				}
 			}
 		]]>
 	</mx:Script>
 	<mx:VBox height="100%" width="15%">
 		<mx:List id="lstSites" left="0" width="100%" height="100%" bottom="0" top="0" labelField="locationName" dataProvider="{KioskModelLocator.getInstance().sites}" selectedIndex="0" />
 		<mx:HBox width="100%" height="30">
-			<mx:Button label="Add" />
-			<mx:Button label="Remove" />
+			<mx:Button label="Add" click="doAddSite(event)" />
+			<mx:Button label="Remove" click="doRemoveSite(event)" />
 		</mx:HBox>
 	</mx:VBox>
 	
@@ -55,8 +85,8 @@
 
 		<mx:HBox height="30" width="100%">
 			<mx:Spacer width="100%" />
-			<mx:Button label="Save" />
-			<mx:Button label="Cancel" />
+			<mx:Button label="Save" click="doSaveFormToModel(event)" />
+			<mx:Button label="Cancel" click="doRevertFormToModel(event)" />
 			<mx:Spacer width="10" />
 		</mx:HBox>
 
