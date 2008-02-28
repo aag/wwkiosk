@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:comp="views.components.*" layout="absolute" width="800" height="600" 
+<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:comp="views.components.*" layout="absolute" width="1360" height="768" 
 	creationComplete="doCreationComplete(event)" xmlns:views="views.*">
 	<mx:Script>
 		<![CDATA[
@@ -32,6 +32,8 @@
 				var launchAdminInterface:Boolean = false;
 				for each (var arg:String in event.arguments){
 					if (arg.toUpperCase() == "/ADMIN"){
+						this.width = 800;
+						this.height = 600;
 						launchAdminInterface = true;
 						break;
 					}
