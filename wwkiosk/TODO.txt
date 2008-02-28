@@ -1,10 +1,15 @@
 o Fix pin graphic (shadow direction, little transparency problems).
-o Site Profile layout.
 o Picture browser component.
 o Video component.
 o Profile story component.
 o Admin interface.
+    - Save form to model
+    - Save model to disk
+    - Replace model with contents of xml file on disk
+    - Pin placement
 o Map scaling issue.
 o Highlight layout with respect to pins.
+
 x Change MapVW to create all SiteHighlights on startup and cycle through them by showing and hiding.
     - Intent: fix memory leak
+x Site Profile layout.

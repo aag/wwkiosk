@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" width="50%" height="80%" creationComplete="doCreationComplete(event)">
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:components="views.components.*" width="50%" height="80%" creationComplete="doCreationComplete(event)">
 	<mx:Script>
 		<![CDATA[
 			import util.XMLLoaderUtil;
@@ -8,16 +8,22 @@
 			import mx.controls.Alert;
 			import mx.events.CloseEvent;
 			
+			// Returns the native path to the directory that contains sites.xml and has the site
+			// directories as subdirectories.
+			private function get mainConfigDirPath():String {
+				return File.documentsDirectory.resolvePath("WWKiosk").nativePath;
+			}
+			
 			private function doCreationComplete(event:Event):void {
 				XMLLoaderUtil.loadSitesData();
 			}
 			
 			private function doSaveFormToModel(event:Event):void {
-				mx.controls.Alert.show("Implement save form");
+				mx.controls.Alert.show("Save form not yet implemented");
 			}
 			
 			private function doRevertFormToModel(event:Event):void {
-				mx.controls.Alert.show("Implement cancel input");
+				mx.controls.Alert.show("Cancel input not yet implemented");
 			}
 			
 			private function doAddSite(event:Event):void {
@@ -27,10 +33,10 @@
 			}
 			
 			private function doRemoveSite(event:Event):void {
-				var result:Alert = Alert.show("Are you sure you want to remove this site?", "Confirm Remove", Alert.OK | Alert.CANCEL, this, removeClickHandler);
+				var result:Alert = Alert.show("Are you sure you want to remove this site?", "Confirm Remove", Alert.OK | Alert.CANCEL, this, confirmRemoveClickHandler);
 			}
 			
-			private function removeClickHandler(event:CloseEvent):void {
+			private function confirmRemoveClickHandler(event:CloseEvent):void {
 				if (event.detail == Alert.OK){
 					var selectedSite:SiteVO = lstSites.selectedItem as SiteVO;
 					if (selectedSite != null){
@@ -38,6 +44,78 @@
 						KioskModelLocator.getInstance().sites.removeItemAt(selectedIndex);
 					}
 				}
+			}
+			
+			private function doPlacePinOnMap(event:Event):void {
+				mx.controls.Alert.show("Place pin not yet implemented");
+			}
+			
+			////////////////
+			// File choosers
+			////////////////
+			
+			// Thumbnail Image
+			private function doChooseThumbnailImage(event:Event):void {
+				var selectedSite:SiteVO = lstSites.selectedItem as SiteVO;
+				var sourceDir:String = mainConfigDirPath + File.separator + selectedSite.sourceDir;
+				var fileChooser:File = new File(sourceDir);
+				var imgFilter:FileFilter = new FileFilter("Image", "*.gif;*.jpg;*.bmp;*.png;");
+				
+				try {
+					fileChooser.browseForOpen("Choose Thumbnail Image", [imgFilter]);
+					fileChooser.addEventListener(Event.SELECT, updateThumbnailImagePath);
+				} catch (error:Error){
+				    trace("Failed:", error.message)
+				}
+			}
+			
+			private function updateThumbnailImagePath(event:Event):void {
+				var chosenFile:File = event.target as File;
+				
+				// Update the form
+				this.thumbnailpathinput.text = chosenFile.nativePath;
+				
+				// Update the model
+				var selectedSite:SiteVO = lstSites.selectedItem as SiteVO;
+				selectedSite.profileImagePath = chosenFile.nativePath;
+			}
+			
+			// Site subdirectory
+			private function doChooseSubdirectory(event:Event):void {
+				var sourceDir:String = mainConfigDirPath;
+				var fileChooser:File = new File(sourceDir);
+				
+				try {
+					fileChooser.browseForDirectory("Choose Directory");
+					fileChooser.addEventListener(Event.SELECT, addSubdirectoryPathToTextInput);
+				} catch (error:Error){
+				    trace("Failed:", error.message)
+				}
+			}
+			
+			private function addSubdirectoryPathToTextInput(event:Event):void {
+				var chosenDir:File = event.target as File;
+				this.subdirectoryinput.text = chosenDir.name;
+			}
+			
+			// Video File
+			private function doChooseVideoFile(event:Event):void {
+				var selectedSite:SiteVO = lstSites.selectedItem as SiteVO;
+				var sourceDir:String = mainConfigDirPath + File.separator + selectedSite.sourceDir;
+				var fileChooser:File = new File(sourceDir);
+				var vidFilter:FileFilter = new FileFilter("Video File", "*.mov;*.mp4;*.flv;");
+				
+				try {
+					fileChooser.browseForOpen("Choose Video File", [vidFilter]);
+					fileChooser.addEventListener(Event.SELECT, addVideoPathToTextInput);
+				} catch (error:Error){
+				    trace("Failed:", error.message)
+				}
+			}
+			
+			private function addVideoPathToTextInput(event:Event):void {
+				var chosenFile:File = event.target as File;
+				this.videopathinput.text = chosenFile.nativePath;
 			}
 		]]>
 	</mx:Script>
@@ -59,23 +137,30 @@
 				<mx:TextInput text="{SiteVO(lstSites.selectedItem).locationName}" width="100%" />
 			</mx:FormItem>
 			
-			<mx:FormItem label="Thumbnail Picture:" width="100%">
-				<mx:TextInput text="{SiteVO(lstSites.selectedItem).profileImagePath}" width="100%" />
-				<mx:Button label="Choose Image" />
-			</mx:FormItem>
-			
 			<mx:FormItem label="Sub-Directory Name:" width="100%">
-				<mx:TextInput text="{SiteVO(lstSites.selectedItem).sourceDir}" width="100%" />
-				<mx:Button label="Choose Directory" />
-			</mx:FormItem>
-			
-			<mx:FormItem label="Map Marker:" width="100%">
-				<mx:Button label="Choose Location" />
+				<mx:HBox width="100%">
+					<mx:TextInput id="subdirectoryinput" text="{SiteVO(lstSites.selectedItem).sourceDir}" width="100%" />
+					<mx:Button label="Choose Directory" click="doChooseSubdirectory(event)" />
+				</mx:HBox>
 			</mx:FormItem>
 			
 			<mx:FormItem label="Video:" width="100%">
-				<mx:TextInput text="{SiteVO(lstSites.selectedItem).videoPath}" width="100%" />
-				<mx:Button label="Choose Video File" />
+				<mx:HBox width="100%">
+					<mx:TextInput id="videopathinput" text="{SiteVO(lstSites.selectedItem).videoPath}" width="100%" />
+					<mx:Button label="Choose Video File" click="doChooseVideoFile(event)" />
+				</mx:HBox>
+			</mx:FormItem>
+			
+			<mx:FormItem label="Thumbnail Picture:" width="100%" direction="horizontal">
+				<mx:HBox width="100%">
+					<components:SmoothImage source="{SiteVO(lstSites.selectedItem).profileImagePath}" width="120" height="120" />
+					<mx:TextInput id="thumbnailpathinput" text="{SiteVO(lstSites.selectedItem).profileImagePath}" width="100%" />
+					<mx:Button label="Choose Image" click="doChooseThumbnailImage(event)" />
+				</mx:HBox>
+			</mx:FormItem>
+			
+			<mx:FormItem label="Map Marker:" width="100%">
+				<mx:Button label="Choose Location" click="doPlacePinOnMap(event)" />
 			</mx:FormItem>
 			
 			<mx:FormItem label="Story:" width="100%" height="100%">
