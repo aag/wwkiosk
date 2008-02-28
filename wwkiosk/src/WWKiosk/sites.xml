@@ -6,6 +6,7 @@
 		<yPosition>100</yPosition>
 		<sourceDir>Adam</sourceDir>
 		<profileImage>portrait.jpg</profileImage>
+        <videoFile>avalanche.flv</videoFile>
 		<people>
 			<names>Adam</names>
 			<story>
@@ -21,6 +22,7 @@
 		<yPosition>50</yPosition>
 		<sourceDir>Jim</sourceDir>
 		<profileImage>jim_portrait.jpg</profileImage>
+        <videoFile>jims_movie.flv</videoFile>
 		<people>
 			<names>Jim</names>
 			<story>
@@ -40,6 +42,7 @@
 		<yPosition>400</yPosition>
 		<sourceDir>OHOLYJESUS</sourceDir>
 		<profileImage>Barzoni-Black-Jesus-Montage-Vincent-Barzoni.jpeg</profileImage>
+        <videoFile>jesus_the_musical.flv</videoFile>
 		<people>
 			<names>Jesus</names>
 			<story>

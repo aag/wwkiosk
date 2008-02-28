@@ -13,11 +13,26 @@ package util
 	
 	public class XMLLoaderUtil
 	{
+		// Hardcoded name of the config dir.  This must be a subdirectory
+		// of the user's documents dir.
+		private static const configDirName:String = "WWKiosk";
+		
+		// Hardcoded name of the config file.
+		private static const configFileName:String = "sites.xml";
+		
+		private static function get mainConfigDirPath():String {
+			return File.documentsDirectory.resolvePath(configDirName).nativePath + File.separator;
+		}
+		
+		private static function getNativeSiteSourceDirPath(sourceDir:String):String {
+			return mainConfigDirPath + sourceDir + File.separator;
+		}
+		
 		public static function loadSitesData():void {
-			if (File.documentsDirectory.resolvePath("WWKiosk/sites.xml").exists){
-				var file:File = File.documentsDirectory.resolvePath("WWKiosk/sites.xml");
+			var configFile:File = new File(mainConfigDirPath + configFileName)
+			if (configFile.exists){
 				var fs:FileStream = new FileStream();
-				fs.open(file, FileMode.READ);
+				fs.open(configFile, FileMode.READ);
 				var sitesXML:XML = XML(fs.readUTFBytes(fs.bytesAvailable));
 				fs.close();
 				KioskModelLocator.getInstance().sites = new ArrayCollection();
@@ -27,7 +42,11 @@ package util
 					vo.xPosition = site.xPosition;
 					vo.yPosition = site.yPosition;
 					vo.sourceDir = site.sourceDir;
-					vo.profileImagePath = File.documentsDirectory.resolvePath("WWKiosk").nativePath + "/" + site.sourceDir + "/" + site.profileImage;
+					vo.profileImagePath = getNativeSiteSourceDirPath(site.sourceDir) + site.profileImage;
+					var videoFileName:String = site.videoFile;
+					if (videoFileName != "") {
+						vo.videoPath = getNativeSiteSourceDirPath(site.sourceDir) + videoFileName;
+					}
 					var p:PeopleVO = new PeopleVO();
 					p.names = site.people.names;
 					p.story = site.people.story;
@@ -36,23 +55,19 @@ package util
 				}
 				loadSiteDirs();
 			} else {
-				mx.controls.Alert.show("Unable to load kiosk data from " + File.documentsDirectory.resolvePath("WWKiosk/sites.xml").toString());
+				mx.controls.Alert.show("Unable to load kiosk data from " + configFile.nativePath);
 			}
 		}
 		
 		public static function loadSiteDirs():void{
 			for each (var site:SiteVO in KioskModelLocator.getInstance().sites){
-				var allFiles:Array = File.documentsDirectory.resolvePath("WWKiosk/" + site.sourceDir ).getDirectoryListing();
+				var sourceDir:File = new File(mainConfigDirPath + site.sourceDir);
+				var allFiles:Array = sourceDir.getDirectoryListing();
 				site.galleryImagePaths = new ArrayCollection();
 				for each (var file:File in allFiles){
 					var imagesRegExp:RegExp = new RegExp("\.(jpg|gif|jpeg|png|swf)$", "i");
 					if (file.name.match(imagesRegExp) && (file.nativePath != site.profileImagePath)){
 						site.galleryImagePaths.addItem(file.nativePath);
-					}
-					
-					var videoRegExp:RegExp = new RegExp("\.mov$", "i");
-					if (file.name.match(videoRegExp)){
-						site.videoPath = file.nativePath;
 					}
 				}
 			}
