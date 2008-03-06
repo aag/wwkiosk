@@ -7,10 +7,11 @@ o Video component.
 o Profile story component.
     - Make multi-column text layout?
 o Admin interface.
-    - Save form to model
-    - Save model to disk
-    - Replace model with contents of xml file on disk
     - Pin placement
+    - Confirm save on exit
+    x Save form to model
+    x Save model to disk
+    x Replace model with contents of xml file on disk
 o Map scaling issue.
 o Highlight layout with respect to pins.
 
