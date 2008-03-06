@@ -11,7 +11,7 @@ package util
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
 	
-	public class XMLLoaderUtil
+	public class XMLSettingsUtil
 	{
 		// Hardcoded name of the config dir.  This must be a subdirectory
 		// of the user's documents dir.
@@ -29,7 +29,7 @@ package util
 		}
 		
 		public static function loadSitesData():void {
-			var configFile:File = new File(mainConfigDirPath + configFileName)
+			var configFile:File = new File(mainConfigDirPath + configFileName);
 			if (configFile.exists){
 				var fs:FileStream = new FileStream();
 				fs.open(configFile, FileMode.READ);
@@ -71,6 +71,49 @@ package util
 					}
 				}
 			}
+		}
+		
+		public static function writeSiteDataToFile():void {
+			var configFile:File = new File(mainConfigDirPath + configFileName);
+			if (configFile.exists){
+				var fs:FileStream = new FileStream();
+				fs.open(configFile, FileMode.WRITE);
+				fs.writeUTFBytes('<?xml version="1.0" encoding="UTF-8"?>\n');
+				fs.writeUTFBytes(serializeModelToXML());
+				fs.close();
+			}
+		}
+		
+		private static function serializeModelToXML():String {
+			var sitesXML:String = "<sites></sites>";
+			var modelXML:XML = new XML(sitesXML);
+				
+			for each (var site:SiteVO in KioskModelLocator.getInstance().sites){
+				var videoFile:File = new File(site.videoPath);
+				var videoFileName:String = videoFile.name;
+				
+				var profileImageFile:File = new File(site.profileImagePath);
+				var profileImageName:String = profileImageFile.name;
+				
+				var siteXML:XML = 
+					<site>
+						<locationName>{site.locationName}</locationName>
+						<xPosition>{site.xPosition}</xPosition>
+						<yPosition>{site.yPosition}</yPosition>
+						<sourceDir>{site.sourceDir}</sourceDir>
+						<profileImage>{profileImageName}</profileImage>
+						<videoFile>{videoFileName}</videoFile>
+						<people>
+							<names>{site.people.names}</names>
+							<story>
+								{site.people.story}
+							</story>
+						</people>
+					</site>;
+				modelXML.appendChild(siteXML);
+			}
+			
+			return modelXML.toXMLString();
 		}
 	}
 }

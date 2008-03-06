@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:components="views.components.*" width="50%" height="80%" creationComplete="doCreationComplete(event)">
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:components="views.components.*" width="50%" height="80%" 
+	creationComplete="doCreationComplete(event)" show="doPrepareForm(event)">
 	<mx:Script>
 		<![CDATA[
-			import util.XMLLoaderUtil;
+			import mx.core.Application;
+			import mx.skins.halo.ButtonSkin;
+			import flash.profiler.profile;
+			import util.XMLSettingsUtil;
 			import model.KioskModelLocator;
 			import model.vo.SiteVO;
 			import mx.controls.Alert;
 			import mx.events.CloseEvent;
+			
+			public var dataIsDirty:Boolean = false;
 			
 			// Returns the native path to the directory that contains sites.xml and has the site
 			// directories as subdirectories.
@@ -15,15 +21,35 @@
 			}
 			
 			private function doCreationComplete(event:Event):void {
-				XMLLoaderUtil.loadSitesData();
+				XMLSettingsUtil.loadSitesData();
 			}
 			
-			private function doSaveFormToModel(event:Event):void {
-				mx.controls.Alert.show("Save form not yet implemented");
+			private function doPrepareForm(event:Event):void {
+				savebutton.enabled = false;
+				cancelbutton.enabled = false;
 			}
 			
-			private function doRevertFormToModel(event:Event):void {
-				mx.controls.Alert.show("Cancel input not yet implemented");
+			private function doSaveForm(event:Event):void {
+				saveFormToDisk();
+				savebutton.enabled = false;
+				cancelbutton.enabled = false;
+			}
+			
+			private function doRevertToSavedSettings(event:Event):void {
+				var selectedIndex:int = lstSites.selectedIndex;
+				
+				XMLSettingsUtil.loadSitesData();
+				
+				if (lstSites.numChildren > selectedIndex){
+					lstSites.selectedIndex = selectedIndex;
+				} else if (lstSites.numChildren >= 1) {
+					lstSites.selectedIndex = 0;
+				} else {
+					// No sites, so don't select one
+				}
+				
+				savebutton.enabled = false;
+				cancelbutton.enabled = false;
 			}
 			
 			private function doAddSite(event:Event):void {
@@ -50,6 +76,28 @@
 				mx.controls.Alert.show("Place pin not yet implemented");
 			}
 			
+			public function saveFormToDisk():void {
+				saveFormToModel();
+				XMLSettingsUtil.writeSiteDataToFile();
+			}
+			
+			private function saveFormToModel():void {
+				var selectedSite:SiteVO = lstSites.selectedItem as SiteVO;
+				
+				selectedSite.locationName = locationnameinput.text;
+				selectedSite.sourceDir = subdirectoryinput.text;
+				selectedSite.videoPath = videopathinput.text;
+				selectedSite.profileImagePath = profilepathinput.text;
+				selectedSite.people.story = storyinput.text;
+				selectedSite.people.names = nameinput.text;
+			}
+			
+			private function doDataChanged(event:Event):void {
+				dataIsDirty = true;
+				savebutton.enabled = true;
+				cancelbutton.enabled = true;
+			}
+			
 			////////////////
 			// File choosers
 			////////////////
@@ -73,7 +121,7 @@
 				var chosenFile:File = event.target as File;
 				
 				// Update the form
-				this.thumbnailpathinput.text = chosenFile.nativePath;
+				profilepathinput.text = chosenFile.nativePath;
 				
 				// Update the model
 				var selectedSite:SiteVO = lstSites.selectedItem as SiteVO;
@@ -130,23 +178,23 @@
 	<mx:VBox height="100%" width="85%">
 		<mx:Form width="100%" height="100%">
 			<mx:FormItem label="Missionaries' Name(s):" width="100%">
-				<mx:TextInput id="nameinput" text="{SiteVO(lstSites.selectedItem).people.names}" width="100%" />
+				<mx:TextInput id="nameinput" text="{SiteVO(lstSites.selectedItem).people.names}" width="100%" change="doDataChanged(event)" />
 			</mx:FormItem>
 			
 			<mx:FormItem label="Missionaries' Location:" width="100%">
-				<mx:TextInput text="{SiteVO(lstSites.selectedItem).locationName}" width="100%" />
+				<mx:TextInput id="locationnameinput" text="{SiteVO(lstSites.selectedItem).locationName}" width="100%" change="doDataChanged(event)" />
 			</mx:FormItem>
 			
 			<mx:FormItem label="Sub-Directory Name:" width="100%">
 				<mx:HBox width="100%">
-					<mx:TextInput id="subdirectoryinput" text="{SiteVO(lstSites.selectedItem).sourceDir}" width="100%" />
+					<mx:TextInput id="subdirectoryinput" text="{SiteVO(lstSites.selectedItem).sourceDir}" width="100%" change="doDataChanged(event)" />
 					<mx:Button label="Choose Directory" click="doChooseSubdirectory(event)" />
 				</mx:HBox>
 			</mx:FormItem>
 			
 			<mx:FormItem label="Video:" width="100%">
 				<mx:HBox width="100%">
-					<mx:TextInput id="videopathinput" text="{SiteVO(lstSites.selectedItem).videoPath}" width="100%" />
+					<mx:TextInput id="videopathinput" text="{SiteVO(lstSites.selectedItem).videoPath}" width="100%" change="doDataChanged(event)" />
 					<mx:Button label="Choose Video File" click="doChooseVideoFile(event)" />
 				</mx:HBox>
 			</mx:FormItem>
@@ -154,7 +202,7 @@
 			<mx:FormItem label="Thumbnail Picture:" width="100%" direction="horizontal">
 				<mx:HBox width="100%">
 					<components:SmoothImage source="{SiteVO(lstSites.selectedItem).profileImagePath}" width="120" height="120" />
-					<mx:TextInput id="thumbnailpathinput" text="{SiteVO(lstSites.selectedItem).profileImagePath}" width="100%" />
+					<mx:TextInput id="profilepathinput" text="{SiteVO(lstSites.selectedItem).profileImagePath}" width="100%" change="doDataChanged(event)" />
 					<mx:Button label="Choose Image" click="doChooseThumbnailImage(event)" />
 				</mx:HBox>
 			</mx:FormItem>
@@ -164,14 +212,14 @@
 			</mx:FormItem>
 			
 			<mx:FormItem label="Story:" width="100%" height="100%">
-				<mx:TextArea text="{SiteVO(lstSites.selectedItem).people.story}" width="100%" height="100%" />
+				<mx:TextArea id="storyinput" text="{SiteVO(lstSites.selectedItem).people.story}" width="100%" height="100%" change="doDataChanged(event)" />
 			</mx:FormItem>
 		</mx:Form>
 
 		<mx:HBox height="30" width="100%">
 			<mx:Spacer width="100%" />
-			<mx:Button label="Save" click="doSaveFormToModel(event)" />
-			<mx:Button label="Cancel" click="doRevertFormToModel(event)" />
+			<mx:Button id="savebutton" label="Save" click="doSaveForm(event)" />
+			<mx:Button id="cancelbutton" label="Cancel" click="doRevertToSavedSettings(event)" />
 			<mx:Spacer width="10" />
 		</mx:HBox>
 
