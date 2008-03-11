@@ -2,8 +2,8 @@ o Fix pin graphic (shadow direction, little transparency problems).
 o Picture browser component.
     - Use coverflow component
 o Video component.
-    - Fix display bug when switching sites
-    - Make the button work/look/be placed correctly
+    - Make the layout of the video and buttons awesome (fullscreen?)
+    x Fix display bug when switching sites
 o Profile story component.
     - Make multi-column text layout?
 o Admin interface.

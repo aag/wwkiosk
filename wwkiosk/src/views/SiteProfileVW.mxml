@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml"  xmlns:components="views.components.*"
 	horizontalScrollPolicy="off" verticalScrollPolicy="off" show="doViewChanged(event)"
-	width="100%" height="100%">
+	width="100%" height="100%" backgroundColor="#eeeeee">
 	<mx:Script>
 		<![CDATA[
 			import mx.core.Application;
@@ -15,8 +15,9 @@
 			
 			private function doReturnToMap(event:Event):void {
 				if (vid != null && videoIsPlaying){
-					vid.pause();
+					vid.stop();
 					videoIsPlaying = false;
+					enableOnlyPlayButton();
 				}
 				Application.application.showMap();
 			}
@@ -31,28 +32,76 @@
 				}
 			}
 			
+			private function doPlay(event:Event):void {
+				if (!videoIsPlaying){
+					vid.play();
+					videoIsPlaying = true;
+					disableOnlyPlayButton();
+				}
+			}
+			
+			private function doPause(event:Event):void {
+				if (videoIsPlaying){
+					vid.pause();
+					videoIsPlaying = false;
+					enableOnlyPlayButton();
+				}
+			}
+			
+			private function doStop(event:Event):void {
+				if (videoIsPlaying){
+					vid.stop();
+					videoIsPlaying = false;
+					enableOnlyPlayButton();
+				}
+			}
+			
 			private function doViewChanged(event:Event):void {
 				if (vsSiteProfile.selectedChild.id != "vVideo") {
 					if (vid != null && videoIsPlaying){
 						vid.pause();
-						videoIsPlaying = false;
+						videoIsPlaying = false;		
+						enableOnlyPlayButton();			
 					}
 				} else {
 					if ((site.videoPath == null) || (site.videoPath == "")){
 						if (vid != null){
 							vid.visible = false;
 						}
-						playpausebutton.visible = false;
+						hideVideoControlButtons();
 					} else {
 						if (vid != null){
-							// TODO: Fix bug where the last displayed frame of the last video
-							// is visible here, even if it's a different video.  Can't we clear
-							// the rectangle or something?
 							vid.visible = true;
 						}
-						playpausebutton.visible = true;
+						showVideoControlButtons();
 					}
 				}
+			}
+			
+			// Functions to change the enabled and visible states of
+			// the control buttons.
+			private function hideVideoControlButtons():void {
+				playbutton.visible = false;
+				pausebutton.visible = false;
+				stopbutton.visible = false;
+			}
+			
+			private function showVideoControlButtons():void {
+				playbutton.visible = true;
+				pausebutton.visible = true;
+				stopbutton.visible = true;
+			}
+			
+			private function enableOnlyPlayButton():void {
+				playbutton.enabled = true;
+				pausebutton.enabled = false;
+				stopbutton.enabled = false;
+			}
+			
+			private function disableOnlyPlayButton():void {
+				playbutton.enabled = false;
+				pausebutton.enabled = true;
+				stopbutton.enabled = true;
 			}
 		]]>
 	</mx:Script>
@@ -66,9 +115,9 @@
 			<mx:Spacer height="100%" />
 		</mx:VBox>
 		<mx:Spacer width="100%" />
-		<mx:Panel headerHeight="5" roundedBottomCorners="true">
+		<!-- <mx:Panel headerHeight="5" roundedBottomCorners="true"> -->
 			<mx:ToggleButtonBar dataProvider="{vsSiteProfile}" />
-		</mx:Panel>
+		<!-- </mx:Panel> -->
 		<mx:Spacer width="100%" />
 		<mx:Button click="doReturnToMap(event)" top="30" right="10" icon="@Embed(source='images/world.png')" />
 		<mx:Spacer width="20" />
@@ -82,9 +131,15 @@
 		</mx:HBox>
 		<components:PhotoBrowser id="vPhotos" 
 			dataProvider="{site.galleryImagePaths}" width="100%" icon="@Embed(source='images/digital_camera.png')" />
-		<mx:HBox id="vVideo" icon="@Embed(source='images/movie_clapboard.png')" verticalAlign="middle" opaqueBackground="0x000000">
+		<mx:VBox id="vVideo" icon="@Embed(source='images/movie_clapboard.png')" verticalAlign="middle" opaqueBackground="0x000000">
 			<mx:VideoDisplay id="vid" width="100%" height="100%" source="{site.videoPath}" autoPlay="false" />
-			<mx:Button id="playpausebutton" icon="@Embed(source='images/play.png')" click="doPlayPause(event)"/>
-		</mx:HBox>
+			<mx:HBox width="100%" horizontalAlign="center">
+				<mx:Spacer width="50%" />
+				<mx:Button id="playbutton" icon="@Embed(source='images/simple_play.png')" click="doPlay(event)" enabled="true" />
+				<mx:Button id="pausebutton" icon="@Embed(source='images/simple_pause.png')" click="doPause(event)" enabled="false" />
+				<mx:Button id="stopbutton" icon="@Embed(source='images/simple_stop.png')" click="doStop(event)" enabled="false" />
+				<mx:Spacer width="50%" />
+			</mx:HBox>
+		</mx:VBox>
 	</mx:ViewStack>
 </mx:VBox>
