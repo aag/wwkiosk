@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:comp="views.components.*" layout="absolute" width="1360" height="768" 
+<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:comp="views.components.*" 
+	layout="absolute" width="1360" height="768" showStatusBar="false" 
 	creationComplete="doCreationComplete(event)" closing="doClosingApplication(event)" xmlns:views="views.*">
 	<mx:Script>
 		<![CDATA[
