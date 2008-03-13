@@ -5,7 +5,7 @@ o Video component.
     - Make the layout of the video and buttons awesome (fullscreen?)
     x Fix display bug when switching sites
 o Profile story component.
-    - Make multi-column text layout?
+    - Fix the ugliness and bugs
 o Admin interface.
     - Pin placement
     - Confirm save on exit
