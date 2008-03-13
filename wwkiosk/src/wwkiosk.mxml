@@ -50,17 +50,21 @@
 				var args:String;
 				args = "Invoke : " + event.arguments + "\n";
 				var launchAdminInterface:Boolean = false;
+				var startFullScreen:Boolean = false;
 				for each (var arg:String in event.arguments){
 					if (arg.toUpperCase() == "/ADMIN"){
 						this.width = 800;
 						this.height = 600;
 						launchAdminInterface = true;
-						break;
+					} else if (arg.toUpperCase() == "/FULLSCREEN"){
+						startFullScreen = true;
 					}
 				}
 				
 				if (launchAdminInterface){
 					showAdmin();
+				} else if (startFullScreen){
+					mx.core.Application.application.stage.displayState = StageDisplayState.FULL_SCREEN;
 				}
 			}
 			
