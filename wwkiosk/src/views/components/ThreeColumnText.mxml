@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" render="doRender(event)" resize="doResize(event)" horizontalGap="0" verticalAlign="middle">
+	<mx:Script>
+        <![CDATA[
+        [Inspectable(defaultValue=3)]
+        private var colWidth:Number = 33.33;
+        private var textHasBeenReflowed:Boolean = false;
+        
+        [Inspectable(defaultValue="")]
+		private var fullText:String = "";
+        
+        private function doResize(event:Event):void {
+        	textHasBeenReflowed = false;
+        }
+        
+        private function doRender(event:Event):void {
+        	reflowText();
+        }
+        
+        private function reflowText():void {
+			if (textHasBeenReflowed){
+				return;
+			}
+			textHasBeenReflowed = true;
+			
+			var wordArray:Array = fullText.split(" ");
+			//fullText.indexOf(
+			var totalWords:int = wordArray.length;
+			var wordCount:int = 0;
+			var lastText:String = "";
+			
+			for each (var textCol:Text in getTextColumns()) {
+				textCol.text = "";
+				textCol.invalidateSize();
+				
+				while (textCol.textHeight < textCol.height && wordCount < totalWords) {
+					lastText = textCol.text;
+					textCol.text += " " + wordArray[wordCount];
+					wordCount++;
+					validateNow();
+				}
+				
+				// Undo the last add
+				if (textCol.textHeight >= textCol.height){
+					wordCount--;
+					textCol.text = lastText;
+				}
+			}
+		}
+		
+		private function getTextColumns():Array {
+			var retArray:Array = new Array;
+			
+			for each (var child:Object in this.getChildren()) {
+				var textChild:Text = child as Text;
+				if (textChild != null) {
+					retArray.push(textChild);
+				}
+			}
+			
+			return retArray;
+		}
+        
+        public function clear():void {
+        	for each (var textCol:Text in this.getTextColumns()) {
+        		textCol.text = "";
+        	}
+        	textHasBeenReflowed = false;
+        }
+        
+        public function set text(inText:String):void {
+        	fullText = inText;
+        }
+        
+        public function get text():String 
+        {
+            return fullText;
+        }
+        
+        ]]>
+    </mx:Script>
+    
+	<mx:Text id="text1" width="34%" height="100%" fontFamily="Garamond" fontSize="20" opaqueBackground="0xFFFFFF" />
+	<mx:Canvas width="10" height="100%" backgroundColor="0xFFFFFF" />
+	<mx:Canvas width="2" height="100%" backgroundColor="0x000000" />
+	<mx:Canvas width="10" height="100%" backgroundColor="0xFFFFFF" />
+	<mx:Text id="text2" width="34%" height="100%" fontFamily="Garamond" fontSize="20" opaqueBackground="0xFFFFFF"  />
+	<mx:Canvas width="10" height="100%" backgroundColor="0xFFFFFF" cornerRadius="0" />
+	<mx:Canvas width="2" height="100%" backgroundColor="0x000000" cornerRadius="0" />
+	<mx:Canvas width="10" height="100%" backgroundColor="0xFFFFFF" cornerRadius="0" />
+	<mx:Text id="text3" width="34%" height="100%" fontFamily="Garamond" fontSize="20" opaqueBackground="0xFFFFFF" />
+</mx:HBox>
