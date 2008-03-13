@@ -59,12 +59,13 @@
 			}
 			
 			private function doShow(event:Event):void {
+				vsSiteProfile.selectedChild = vStory;
 				vStory.clear();
 				doViewChanged(event);
 			}
 			
 			private function doViewChanged(event:Event):void {
-				if (vsSiteProfile.selectedChild.id != "vVideo") {
+				if (vsSiteProfile.selectedChild != vVideo) {
 					if (vid != null && videoIsPlaying){
 						vid.pause();
 						videoIsPlaying = false;		
