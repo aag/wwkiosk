@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" render="doRender(event)" resize="doResize(event)" horizontalGap="0" verticalAlign="middle">
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" render="doRender(event)" resize="doResize(event)" horizontalGap="0" verticalAlign="middle" opaqueBackground="0xFFFFFF">
 	<mx:Script>
         <![CDATA[
-        [Inspectable(defaultValue=3)]
-        private var colWidth:Number = 33.33;
         private var textHasBeenReflowed:Boolean = false;
         
         [Inspectable(defaultValue="")]
@@ -81,12 +79,12 @@
     </mx:Script>
     
 	<mx:Text id="text1" width="34%" height="100%" fontFamily="Garamond" fontSize="20" opaqueBackground="0xFFFFFF" />
-	<mx:Canvas width="10" height="100%" backgroundColor="0xFFFFFF" />
-	<mx:Canvas width="2" height="100%" backgroundColor="0x000000" />
-	<mx:Canvas width="10" height="100%" backgroundColor="0xFFFFFF" />
+	<mx:Spacer width="10" height="100%" />
+	<mx:VRule height="100%" strokeColor="0x222222" />
+	<mx:Spacer width="10" height="100%" />
 	<mx:Text id="text2" width="34%" height="100%" fontFamily="Garamond" fontSize="20" opaqueBackground="0xFFFFFF"  />
-	<mx:Canvas width="10" height="100%" backgroundColor="0xFFFFFF" cornerRadius="0" />
-	<mx:Canvas width="2" height="100%" backgroundColor="0x000000" cornerRadius="0" />
-	<mx:Canvas width="10" height="100%" backgroundColor="0xFFFFFF" cornerRadius="0" />
+	<mx:Spacer width="10" height="100%" />
+	<mx:VRule height="100%" strokeColor="0x222222" />
+	<mx:Spacer width="10" height="100%" />
 	<mx:Text id="text3" width="34%" height="100%" fontFamily="Garamond" fontSize="20" opaqueBackground="0xFFFFFF" />
 </mx:HBox>
