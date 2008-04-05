@@ -17,7 +17,7 @@
 			}
 			
 			private function doRightButtonClick(event:Event):void {
-				if ((tlThumbnails.selectedIndex == tlThumbnails.numChildren) || 
+				if ((tlThumbnails.selectedIndex >= (tlThumbnails.numChildren - 1)) || 
 				    (tlThumbnails.selectedIndex == -1)) {
 					// The last image or no image is selected
 					tlThumbnails.selectedIndex = 0;
