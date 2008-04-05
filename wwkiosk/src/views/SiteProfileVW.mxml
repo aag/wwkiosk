@@ -132,12 +132,12 @@
 	<mx:ViewStack id="vsSiteProfile" height="100%" width="100%" change="doViewChanged(event)">
 		<components:ThreeColumnText id="vStory" icon="@Embed(source='images/folder.png')" text="{site.people.story}" 
 			width="100%" height="100%" paddingTop="50" paddingBottom="50" paddingLeft="50" paddingRight="50" />
-		
-		<components:PhotoBrowser id="vPhotos" 
+					
+		<components:PhotoFlow id="vPhotos" 
 			dataProvider="{site.galleryImagePaths}" width="100%" icon="@Embed(source='images/digital_camera.png')" />
 			
-		<mx:VBox id="vVideo" icon="@Embed(source='images/movie_clapboard.png')" verticalAlign="middle" opaqueBackground="0x000000">
-			<mx:VideoDisplay id="vid" width="100%" height="100%" source="{site.videoPath}" autoPlay="false" />
+		<mx:VBox id="vVideo" icon="@Embed(source='images/movie_clapboard.png')" verticalAlign="middle" >
+			<mx:VideoDisplay id="vid" width="100%" height="100%" source="{site.videoPath}" autoPlay="false" backgroundAlpha="0.0" />
 			<mx:HBox width="100%" horizontalAlign="center">
 				<mx:Spacer width="50%" />
 				<mx:Button id="playbutton" icon="@Embed(source='images/simple_play.png')" click="doPlay(event)" enabled="true" />
