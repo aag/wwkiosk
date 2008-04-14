@@ -15,40 +15,28 @@
 			private var videoIsPlaying:Boolean = false;
 						
 			private function doReturnToMap(event:Event):void {
-				if (vid != null){
-					vid.stop();
-					videoIsPlaying = false;
-				}
+				doStopVid(event);
 				vStory.clear();
 				Application.application.showMap();
 			}
 			
-			private function doPlayPause(event:Event):void {
-				if (videoIsPlaying){
-					vid.pause();
-					videoIsPlaying = false;
-				} else {
+			private function doPlayVid(event:Event):void {
+				if ((vid != null) && !videoIsPlaying){
 					vid.play();
 					videoIsPlaying = true;
+					vid.visible = true;
 				}
 			}
 			
-			private function doPlay(event:Event):void {
-				if (!videoIsPlaying){
-					vid.play();
-					videoIsPlaying = true;
-				}
-			}
-			
-			private function doPause(event:Event):void {
-				if (videoIsPlaying){
+			private function doPauseVid(event:Event):void {
+				if ((vid != null) && videoIsPlaying){
 					vid.pause();
 					videoIsPlaying = false;
 				}
 			}
 			
-			private function doStop(event:Event):void {
-				if (videoIsPlaying){
+			private function doStopVid(event:Event):void {
+				if ((vid != null) && videoIsPlaying){
 					vid.stop();
 					videoIsPlaying = false;
 				}
@@ -62,20 +50,14 @@
 			
 			private function doViewChanged(event:Event):void {
 				if (vsSiteProfile.selectedChild != vVideo) {
-					if (vid != null && videoIsPlaying){
-						vid.pause();
-						videoIsPlaying = false;	
-					}
+					doPauseVid(event);
 				} else {
 					if ((site.videoPath == null) || (site.videoPath == "")){
 						if (vid != null){
 							vid.visible = false;
 						}
 					} else {
-						if (vid != null){
-							vid.visible = true;
-							doPlay(event);
-						}
+						doPlayVid(event);
 					}
 				}
 			}
