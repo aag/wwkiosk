@@ -15,10 +15,9 @@
 			private var videoIsPlaying:Boolean = false;
 						
 			private function doReturnToMap(event:Event):void {
-				if (vid != null && videoIsPlaying){
+				if (vid != null){
 					vid.stop();
 					videoIsPlaying = false;
-					enableOnlyPlayButton();
 				}
 				vStory.clear();
 				Application.application.showMap();
@@ -38,7 +37,6 @@
 				if (!videoIsPlaying){
 					vid.play();
 					videoIsPlaying = true;
-					disableOnlyPlayButton();
 				}
 			}
 			
@@ -46,7 +44,6 @@
 				if (videoIsPlaying){
 					vid.pause();
 					videoIsPlaying = false;
-					enableOnlyPlayButton();
 				}
 			}
 			
@@ -54,7 +51,6 @@
 				if (videoIsPlaying){
 					vid.stop();
 					videoIsPlaying = false;
-					enableOnlyPlayButton();
 				}
 			}
 			
@@ -68,48 +64,20 @@
 				if (vsSiteProfile.selectedChild != vVideo) {
 					if (vid != null && videoIsPlaying){
 						vid.pause();
-						videoIsPlaying = false;		
-						enableOnlyPlayButton();			
+						videoIsPlaying = false;	
 					}
 				} else {
 					if ((site.videoPath == null) || (site.videoPath == "")){
 						if (vid != null){
 							vid.visible = false;
 						}
-						hideVideoControlButtons();
 					} else {
 						if (vid != null){
 							vid.visible = true;
+							doPlay(event);
 						}
-						showVideoControlButtons();
 					}
 				}
-			}
-			
-			// Functions to change the enabled and visible states of
-			// the video control buttons.
-			private function hideVideoControlButtons():void {
-				playbutton.visible = false;
-				pausebutton.visible = false;
-				stopbutton.visible = false;
-			}
-			
-			private function showVideoControlButtons():void {
-				playbutton.visible = true;
-				pausebutton.visible = true;
-				stopbutton.visible = true;
-			}
-			
-			private function enableOnlyPlayButton():void {
-				playbutton.enabled = true;
-				pausebutton.enabled = false;
-				stopbutton.enabled = false;
-			}
-			
-			private function disableOnlyPlayButton():void {
-				playbutton.enabled = false;
-				pausebutton.enabled = true;
-				stopbutton.enabled = true;
 			}
 		]]>
 	</mx:Script>
@@ -138,13 +106,7 @@
 			
 		<mx:VBox id="vVideo" icon="@Embed(source='images/movie_clapboard.png')" verticalAlign="middle" >
 			<mx:VideoDisplay id="vid" width="100%" height="100%" source="{site.videoPath}" autoPlay="false" backgroundAlpha="0.0" />
-			<mx:HBox width="100%" horizontalAlign="center">
-				<mx:Spacer width="50%" />
-				<mx:Button id="playbutton" icon="@Embed(source='images/simple_play.png')" click="doPlay(event)" enabled="true" />
-				<mx:Button id="pausebutton" icon="@Embed(source='images/simple_pause.png')" click="doPause(event)" enabled="false" />
-				<mx:Button id="stopbutton" icon="@Embed(source='images/simple_stop.png')" click="doStop(event)" enabled="false" />
-				<mx:Spacer width="50%" />
-			</mx:HBox>
+			<mx:Spacer height="1%" />
 		</mx:VBox>
 	</mx:ViewStack>
 </mx:VBox>

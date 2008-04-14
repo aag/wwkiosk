@@ -1,7 +1,4 @@
 o Fix pin graphic (shadow direction, little transparency problems).
-o Video component.
-    - Make the layout of the video and buttons awesome (fullscreen?)
-    x Fix display bug when switching sites
 o Profile story component.
     - Fix the resize bug (back burner)
 o Admin interface.
@@ -18,3 +15,6 @@ x Change MapVW to create all SiteHighlights on startup and cycle through them by
 x Site Profile layout.
 x Picture browser component.
     x Use coverflow component
+x Video component.
+    x Make the layout of the video and buttons awesome (fullscreen?)
+    x Fix display bug when switching sites
