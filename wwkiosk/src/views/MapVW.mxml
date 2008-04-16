@@ -56,8 +56,8 @@
 					var aHighlight:SiteHighlight = new SiteHighlight();
 					
 					aHighlight.site = SiteVO(KioskModelLocator.getInstance().sites.getItemAt(i));
-					aHighlight.x = aHighlight.site.xPosition;
-					aHighlight.y = aHighlight.site.yPosition;
+					aHighlight.x = aHighlight.site.xPosition + 35;
+					aHighlight.y = aHighlight.site.yPosition - 10;
 					aHighlight.visible = false;
 					
 					this.addChild(aHighlight);

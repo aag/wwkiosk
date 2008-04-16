@@ -2,7 +2,7 @@
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:components="views.components.*" 
 	styleName="roundedPanel" borderAlpha="1" horizontalScrollPolicy="off" verticalScrollPolicy="off"
 	useHandCursor="true" buttonMode="true" mouseChildren="false" click="doClick(event)"
-	width="275" height="300">
+	width="275" height="250">
 	<mx:Script>
 		<![CDATA[
 			import mx.core.Application;
@@ -19,10 +19,10 @@
 	</mx:Script>
 	<mx:Style>
 		.roundedPanel {
-		   corner-radius: 20;
+		   corner-radius: 10;
 		   header-height: 0;
 		   panel-border-style: roundCorners;
-		   shadow-distance: 50;
+		   shadow-distance: 30;
 		   shadow-direction: right;
 		   background-color: #ffffff;
 		   roundedBottomCorners: true;
