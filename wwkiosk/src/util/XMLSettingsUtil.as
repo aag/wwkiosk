@@ -89,8 +89,14 @@ package util
 			var modelXML:XML = new XML(sitesXML);
 				
 			for each (var site:SiteVO in KioskModelLocator.getInstance().sites){
-				var videoFile:File = new File(site.videoPath);
-				var videoFileName:String = videoFile.name;
+				var videoFileName:String = "";
+				
+				if ((site.videoPath != null) && (site.videoPath != "")){
+					var videoFile:File = new File(site.videoPath);
+					if ((videoFile != null) && videoFile.exists){
+						videoFileName = videoFile.name;
+					}
+				}
 				
 				var profileImageFile:File = new File(site.profileImagePath);
 				var profileImageName:String = profileImageFile.name;

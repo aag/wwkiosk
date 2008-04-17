@@ -3,6 +3,7 @@
 	creationComplete="doCreationComplete(event)" show="doPrepareForm(event)">
 	<mx:Script>
 		<![CDATA[
+			import model.vo.PeopleVO;
 			import mx.core.Application;
 			import mx.skins.halo.ButtonSkin;
 			import flash.profiler.profile;
@@ -55,6 +56,7 @@
 			private function doAddSite(event:Event):void {
 				var newSite:SiteVO = new SiteVO();
 				newSite.locationName = "New Site";
+				newSite.people = new PeopleVO();
 				KioskModelLocator.getInstance().sites.addItem(newSite);
 			}
 			
