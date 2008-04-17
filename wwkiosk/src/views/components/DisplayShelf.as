@@ -86,7 +86,7 @@ package views.components
 
 		// how far, in pixels, each child will overlap when stacked sideways. This probably should be a percentage of the size of the children...i.e., overlap 1/5th...but
 		// we're taking a shortcut here by defining it in pixels.		
-		private const kPaneOverlap:Number = 70;
+		private const kPaneOverlap:Number = 80;
 
 		//---------------------------------------------------------------------------------------
 		// private state
