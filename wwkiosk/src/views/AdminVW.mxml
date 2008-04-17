@@ -58,6 +58,7 @@
 				newSite.locationName = "New Site";
 				newSite.people = new PeopleVO();
 				KioskModelLocator.getInstance().sites.addItem(newSite);
+				lstSites.selectedItem = newSite;
 			}
 			
 			private function doRemoveSite(event:Event):void {
