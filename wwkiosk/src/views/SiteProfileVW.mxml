@@ -17,6 +17,7 @@
 			private function doReturnToMap(event:Event):void {
 				doStopVid(event);
 				vStory.clear();
+				vPhotos.resetSelection();
 				Application.application.showMap();
 			}
 			
