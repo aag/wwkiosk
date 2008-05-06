@@ -9,7 +9,7 @@
 
 			public function resetSelection():void {
 				if ((shelf != null) && (shelf.numChildren >= 1)){
-					shelf.selectedIndex = 0;
+					shelf.resetSelection();
 				}
 			}
 		]]>

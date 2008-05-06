@@ -29,15 +29,11 @@ package views.components
 	import flash.events.EventDispatcher;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
-	import flash.events.TimerEvent;
-	import flash.filters.DropShadowFilter;
 	import flash.geom.Matrix;
 	import flash.ui.Keyboard;
 	import flash.utils.Dictionary;
-	import flash.utils.Timer;
 	
 	import mx.collections.ArrayCollection;
-	import mx.collections.ICollectionView;
 	import mx.collections.IList;
 	import mx.collections.XMLListCollection;
 	import mx.controls.Image;
@@ -236,6 +232,17 @@ package views.components
 		public function get selectedIndex():Number
 		{
 			return _selectedIndex;
+		}
+		
+		public function resetSelection():void {
+			selectedIndex = 0;
+			
+			// Jump to the end of the animation right away.  We don't want to watch the motion, we just want to
+			// reset.
+			if(_animation != null && _animation.isPlaying)
+	    	{
+	    		_animation.end();
+	    	}
 		}
 
 
