@@ -70,8 +70,7 @@
         	fullText = inText;
         }
         
-        public function get text():String 
-        {
+        public function get text():String {
             return fullText;
         }
         
