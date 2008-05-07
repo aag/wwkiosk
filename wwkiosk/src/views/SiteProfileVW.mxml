@@ -37,7 +37,7 @@
 			}
 			
 			private function doStopVid(event:Event):void {
-				if ((vid != null) && videoIsPlaying){
+				if (vid != null){
 					vid.stop();
 					videoIsPlaying = false;
 				}
