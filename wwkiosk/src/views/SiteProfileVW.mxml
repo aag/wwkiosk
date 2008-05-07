@@ -37,7 +37,7 @@
 			}
 			
 			private function doStopVid(event:Event):void {
-				if (vid != null){
+				if (vid != null && !(site.videoPath == null) && !(site.videoPath == "")){
 					vid.stop();
 					videoIsPlaying = false;
 				}
