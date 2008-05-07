@@ -130,7 +130,7 @@
 			}
 			
 			public function doMapClick(event:MouseEvent):void {
-				if (isPlacingPin) {
+				if (isPlacingPin && (event.target != placementFinishedButton)) {
 					if (newPin == null) {
 						newPin = new SitePin();
 						newPin.isClickable = false;
