@@ -2,13 +2,15 @@ o Fix pin graphic (shadow direction, little transparency problems).
 o Profile story component.
     - Fix the resize bug (back burner)
 o Admin interface.
-    - Pin placement
     - Confirm save on exit
     x Save form to model
     x Save model to disk
     x Replace model with contents of xml file on disk
+    x Pin placement
 o Map scaling issue.
+o Make pin coordinates percentage based instead of pixel based.
 o Highlight layout with respect to pins.
+o Add info message if there is no video (would it be better to hide the video button instead?)
 
 x Change MapVW to create all SiteHighlights on startup and cycle through them by showing and hiding.
     - Intent: fix memory leak

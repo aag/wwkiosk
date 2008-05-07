@@ -10,8 +10,25 @@
 			[Bindable]
 			public var site:SiteVO;
 			
+			public var isClickable:Boolean = true;
+			
+			public function set clickable(inIsClickable:Boolean):void {
+				if (isClickable != inIsClickable) {
+					isClickable = inIsClickable;
+					
+					useHandCursor = isClickable;
+					buttonMode = isClickable;
+				}
+			}
+			
+			public function get clickable():Boolean {
+				return isClickable;
+			}
+			
 			private function doClick(event:Event):void {
-				Application.application.showSiteProfile(site);
+				if (isClickable) {
+					Application.application.showSiteProfile(site);
+				}
 			}
 			
 		]]>

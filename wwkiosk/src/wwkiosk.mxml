@@ -15,7 +15,6 @@
 			private function doCreationComplete(event:Event):void {
 				XMLSettingsUtil.loadSitesData();
 				NativeApplication.nativeApplication.addEventListener(InvokeEvent.INVOKE, onInvoke);
-				//mx.core.Application.application.stage.displayState = StageDisplayState.FULL_SCREEN;
 				vMap.layoutPins();
 			}
 			
@@ -51,21 +50,21 @@
 				var args:String;
 				args = "Invoke : " + event.arguments + "\n";
 				var launchAdminInterface:Boolean = false;
-				var startFullScreen:Boolean = false;
+				var startFullscreen:Boolean = false;
 				for each (var arg:String in event.arguments){
 					if (arg.toUpperCase() == "/ADMIN"){
 						this.width = 800;
 						this.height = 600;
 						launchAdminInterface = true;
 					} else if (arg.toUpperCase() == "/FULLSCREEN"){
-						startFullScreen = true;
+						startFullscreen = true;
 					}
 				}
 				
 				if (launchAdminInterface){
 					showAdmin();
-				} else if (startFullScreen){
-					mx.core.Application.application.stage.displayState = StageDisplayState.FULL_SCREEN;
+				} else if (startFullscreen){
+					makeFullscreen();
 				}
 			}
 			
@@ -74,12 +73,34 @@
 				vSiteProfile.site = site;
 			}
 			
-			public function showMap():void {
+			public function showMap(placePin:Boolean = false, site:SiteVO = null):void {
+				if (placePin) {
+					makeFullscreen();
+				}
+				
+				vMap.placePin = placePin;
+				vMap.siteForPlacedPin = site;
 				vwMain.selectedChild = this.vMap;
 			}
 			
 			public function showAdmin():void {
 				vwMain.selectedChild = this.vAdmin;
+			}
+			
+			public function returnToAdminFromPinPlacement(pinWasPlaced:Boolean):void {
+				vwMain.selectedChild = this.vAdmin;
+				
+				if (pinWasPlaced) {
+					vAdmin.makeDirty();
+				}
+			}
+			
+			public function makeFullscreen():void {
+				mx.core.Application.application.stage.displayState = StageDisplayState.FULL_SCREEN;
+			}
+			
+			public function makeWindowed():void {
+				mx.core.Application.application.stage.displayState = StageDisplayState.NORMAL;
 			}
 			
 			private function isAdminShowing():Boolean {

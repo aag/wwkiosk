@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" top="0" bottom="0" left="0" right="0" backgroundColor="#7cb7f3" 
-	xmlns:component="info.emantis.view.component.*" creationComplete="doCreationComplete(event)">
+	xmlns:component="info.emantis.view.component.*" creationComplete="doCreationComplete(event)" show="doShow(event)" click="doMapClick(event)">
 	<mx:Script>
 		<![CDATA[
 			import views.components.SitePin;
@@ -10,6 +10,7 @@
 			import mx.controls.Alert;
 			import flash.utils.Timer;
     		import flash.events.TimerEvent;
+    		import mx.core.Application;
 	
 			private static const HIGHLIGHT_DELAY:int = 3000;
 	
@@ -19,16 +20,40 @@
 			private var highlightTimer:Timer;
 			private var currentHighlight:int;
 			private var allHighlights:Array;
+			private var allPins:Array;
+			private var isPlacingPin:Boolean;
+			private var newPin:SitePin;
+			private var newPinSite:SiteVO;
+			private var pinHasBeenMoved:Boolean = false;
 			
 			private function doCreationComplete(event:Event):void {
-            	this.highlightTimer = new Timer(HIGHLIGHT_DELAY, 0 );
-            	this.highlightTimer.addEventListener( "timer" , showNextHighlight );
-            	this.highlightTimer.start();
+				// The default mode is site navigation, so only show the pin placement
+				// finished button if explicitly told to do so.
+				placementFinishedButton.visible = false;
+				
+				highlightTimer = new Timer(HIGHLIGHT_DELAY, 0 );
+            	highlightTimer.addEventListener( "timer" , showNextHighlight );
+            	highlightTimer.start();
+        	}
+        	
+        	private function doShow(event:Event):void {
+        		placementFinishedButton.visible = isPlacingPin;
+        		
+        		for each (var pin:SitePin in allPins) {
+        			pin.visible = !isPlacingPin;
+        			
+        			if ((newPinSite != null) && (newPinSite == pin.site)) {
+						newPin = pin;
+						newPin.isClickable = false;
+						newPin.visible = true;
+					}
+        		}
         	}
 
 			private function showNextHighlight(event:TimerEvent):void {
-				// The map isn't showing
-				if (!this.visible){
+				// The timer will fire even if the map isn't showing on the screen or
+				// if we're in pin placement mode.
+				if (!visible || isPlacingPin){
 					return;
 				}
 				
@@ -60,23 +85,70 @@
 					aHighlight.y = aHighlight.site.yPosition - 10;
 					aHighlight.visible = false;
 					
-					this.addChild(aHighlight);
+					addChild(aHighlight);
 					allHighlights.push(aHighlight);
 				}
 			}
 				
 			public function layoutPins():void {
+				allPins = new Array();
+				
 				for(var i:int=0; i < KioskModelLocator.getInstance().sites.length; i++) {
 					var site:SiteVO = SiteVO(KioskModelLocator.getInstance().sites.getItemAt(i));
 					var pin:SitePin = new SitePin();
 					pin.site = site;
 					pin.x = site.xPosition;
 					pin.y = site.yPosition;
-					this.addChild(pin);
+					allPins.push(pin);
+					addChild(pin);
+				}
+			}
+			
+			public function set placePin(inPlacePin:Boolean):void {
+				if (isPlacingPin != inPlacePin) {
+					isPlacingPin = inPlacePin;
+				}
+	        }
+	        
+	        public function get placePin():Boolean {
+	            return isPlacingPin;
+	        }
+			
+			public function set siteForPlacedPin(site:SiteVO):void {
+				if (newPinSite != site) {
+					newPinSite = site;
+				}
+			}
+			
+			public function get siteForPlacedPin():SiteVO {
+				return newPinSite;
+			}
+			
+			public function returnToAdmin(event:Event):void {
+				Application.application.makeWindowed();
+				Application.application.returnToAdminFromPinPlacement(pinHasBeenMoved);
+			}
+			
+			public function doMapClick(event:MouseEvent):void {
+				if (isPlacingPin) {
+					if (newPin == null) {
+						newPin = new SitePin();
+						newPin.isClickable = false;
+						addChild(newPin);
+					}
+					
+					newPin.x = event.stageX - (newPin.width / 4);
+					newPin.y = event.stageY - newPin.height;
+					
+					newPinSite.xPosition = newPin.x;
+					newPinSite.yPosition = newPin.y;
+					
+					pinHasBeenMoved = true;
 				}
 			}
 			
 		]]>
 	</mx:Script>
-	<mx:Image source="{map}" width="100%" left="0" right="0" maintainAspectRatio="true" scaleContent="true" scaleY="1.4" scaleX="1.4" verticalAlign="middle" horizontalAlign="center"/>
+	<mx:Image source="{map}" width="100%" left="0" right="0" click="doMapClick(event)" maintainAspectRatio="true" scaleContent="true" scaleY="1.4" scaleX="1.4" verticalAlign="middle" horizontalAlign="center"/>
+	<mx:Button id="placementFinishedButton" click="returnToAdmin(event)" top="30" right="10" icon="@Embed(source='images/checkmark.png')" />
 </mx:Canvas>

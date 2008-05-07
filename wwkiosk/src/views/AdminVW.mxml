@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:components="views.components.*" width="50%" height="80%" 
-	creationComplete="doCreationComplete(event)" show="doPrepareForm(event)">
+	creationComplete="doCreationComplete(event)" show="doShow(event)">
 	<mx:Script>
 		<![CDATA[
 			import model.vo.PeopleVO;
@@ -15,6 +15,17 @@
 			
 			public var dataIsDirty:Boolean = false;
 			
+			public function saveFormToDisk():void {
+				saveFormToModel();
+				XMLSettingsUtil.writeSiteDataToFile();
+			}
+						
+			public function makeDirty():void {
+				dataIsDirty = true;
+				savebutton.enabled = true;
+				cancelbutton.enabled = true;
+			}
+			
 			// Returns the native path to the directory that contains sites.xml and has the site
 			// directories as subdirectories.
 			private function get mainConfigDirPath():String {
@@ -25,9 +36,11 @@
 				XMLSettingsUtil.loadSitesData();
 			}
 			
-			private function doPrepareForm(event:Event):void {
-				savebutton.enabled = false;
-				cancelbutton.enabled = false;
+			private function doShow(event:Event):void {
+				if (!dataIsDirty) {
+					savebutton.enabled = false;
+					cancelbutton.enabled = false;
+				}
 			}
 			
 			private function doSaveForm(event:Event):void {
@@ -76,12 +89,7 @@
 			}
 			
 			private function doPlacePinOnMap(event:Event):void {
-				mx.controls.Alert.show("Place pin not yet implemented");
-			}
-			
-			public function saveFormToDisk():void {
-				saveFormToModel();
-				XMLSettingsUtil.writeSiteDataToFile();
+				Application.application.showMap(true, lstSites.selectedItem as SiteVO);				
 			}
 			
 			private function saveFormToModel():void {
@@ -96,9 +104,7 @@
 			}
 			
 			private function doDataChanged(event:Event):void {
-				dataIsDirty = true;
-				savebutton.enabled = true;
-				cancelbutton.enabled = true;
+				makeDirty();
 			}
 			
 			////////////////
@@ -129,6 +135,8 @@
 				// Update the model
 				var selectedSite:SiteVO = lstSites.selectedItem as SiteVO;
 				selectedSite.profileImagePath = chosenFile.nativePath;
+				
+				makeDirty();
 			}
 			
 			// Site subdirectory
@@ -147,6 +155,7 @@
 			private function addSubdirectoryPathToTextInput(event:Event):void {
 				var chosenDir:File = event.target as File;
 				this.subdirectoryinput.text = chosenDir.name;
+				makeDirty();
 			}
 			
 			// Video File
@@ -167,6 +176,7 @@
 			private function addVideoPathToTextInput(event:Event):void {
 				var chosenFile:File = event.target as File;
 				this.videopathinput.text = chosenFile.nativePath;
+				makeDirty();
 			}
 		]]>
 	</mx:Script>
