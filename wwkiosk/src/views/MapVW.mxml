@@ -62,12 +62,14 @@
 					constructHighlights();
 				}
 				
-				allHighlights[currentHighlight].visible = false;
-				
-				// Increment the current highlight number, wrapping at the end
-				currentHighlight < (KioskModelLocator.getInstance().sites.length - 1) ? currentHighlight++ : currentHighlight = 0;
-				
-				allHighlights[currentHighlight].visible = true;
+				if (allHighlights.length > 0){
+					allHighlights[currentHighlight].visible = false;
+					
+					// Increment the current highlight number, wrapping at the end
+					currentHighlight < (KioskModelLocator.getInstance().sites.length - 1) ? currentHighlight++ : currentHighlight = 0;
+					
+					allHighlights[currentHighlight].visible = true;
+				}
 			}
 
 			private function constructHighlights():void {

@@ -29,6 +29,11 @@ package util
 		}
 		
 		public static function loadSitesData():void {
+			var configDir:File = new File(mainConfigDirPath);
+			if (!configDir.exists){
+				configDir.createDirectory();
+			}
+			
 			var configFile:File = new File(mainConfigDirPath + configFileName);
 			if (configFile.exists){
 				var fs:FileStream = new FileStream();
@@ -55,7 +60,9 @@ package util
 				}
 				loadSiteDirs();
 			} else {
-				mx.controls.Alert.show("Unable to load kiosk data from " + configFile.nativePath);
+				KioskModelLocator.getInstance().sites = new ArrayCollection();
+				writeSiteDataToFile();
+				mx.controls.Alert.show("Config file not found.  Creating new one at " + configFile.nativePath);
 			}
 		}
 		
@@ -75,13 +82,12 @@ package util
 		
 		public static function writeSiteDataToFile():void {
 			var configFile:File = new File(mainConfigDirPath + configFileName);
-			if (configFile.exists){
-				var fs:FileStream = new FileStream();
-				fs.open(configFile, FileMode.WRITE);
-				fs.writeUTFBytes('<?xml version="1.0" encoding="UTF-8"?>\n');
-				fs.writeUTFBytes(serializeModelToXML());
-				fs.close();
-			}
+			
+			var fs:FileStream = new FileStream();
+			fs.open(configFile, FileMode.WRITE);
+			fs.writeUTFBytes('<?xml version="1.0" encoding="UTF-8"?>\n');
+			fs.writeUTFBytes(serializeModelToXML());
+			fs.close();
 		}
 		
 		private static function serializeModelToXML():String {
