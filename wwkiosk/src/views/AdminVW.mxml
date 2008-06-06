@@ -32,6 +32,11 @@
 				return File.documentsDirectory.resolvePath("WWKiosk").nativePath;
 			}
 			
+			private function get sourcePathForSelectedSite():String {
+				var selectedSite:SiteVO = lstSites.selectedItem as SiteVO;
+				return (mainConfigDirPath + File.separator + selectedSite.sourceDir);
+			}
+			
 			private function doCreationComplete(event:Event):void {
 				XMLSettingsUtil.loadSitesData();
 			}
@@ -113,9 +118,7 @@
 			
 			// Thumbnail Image
 			private function doChooseThumbnailImage(event:Event):void {
-				var selectedSite:SiteVO = lstSites.selectedItem as SiteVO;
-				var sourceDir:String = mainConfigDirPath + File.separator + selectedSite.sourceDir;
-				var fileChooser:File = new File(sourceDir);
+				var fileChooser:File = new File(sourcePathForSelectedSite);
 				var imgFilter:FileFilter = new FileFilter("Image", "*.gif;*.jpg;*.bmp;*.png;");
 				
 				try {
@@ -128,21 +131,26 @@
 			
 			private function updateThumbnailImagePath(event:Event):void {
 				var chosenFile:File = event.target as File;
+				var sourceDir:File = new File(sourcePathForSelectedSite);
+				var relativePath:String = sourceDir.getRelativePath(chosenFile, false);
 				
-				// Update the form
-				profilepathinput.text = chosenFile.nativePath;
-				
-				// Update the model
-				var selectedSite:SiteVO = lstSites.selectedItem as SiteVO;
-				selectedSite.profileImagePath = chosenFile.nativePath;
-				
-				makeDirty();
+				if (relativePath == chosenFile.name){
+					// Update the form
+					profilepathinput.text = chosenFile.nativePath;
+					
+					// Update the model
+					var selectedSite:SiteVO = lstSites.selectedItem as SiteVO;
+					selectedSite.profileImagePath = chosenFile.nativePath;
+					
+					makeDirty();
+				} else {
+					mx.controls.Alert.show("Error! The thumbnail file must be in this site's directory, " + sourcePathForSelectedSite);
+				}
 			}
 			
 			// Site subdirectory
 			private function doChooseSubdirectory(event:Event):void {
-				var sourceDir:String = mainConfigDirPath;
-				var fileChooser:File = new File(sourceDir);
+				var fileChooser:File = new File(mainConfigDirPath);
 				
 				try {
 					fileChooser.browseForDirectory("Choose Directory");
@@ -153,16 +161,22 @@
 			}
 			
 			private function addSubdirectoryPathToTextInput(event:Event):void {
+				// Make sure it's a subdirectory of the config dir
 				var chosenDir:File = event.target as File;
-				this.subdirectoryinput.text = chosenDir.name;
-				makeDirty();
+				var sourceDir:File = new File(mainConfigDirPath);
+				var relativePath:String = sourceDir.getRelativePath(chosenDir, false);
+				
+				if ((relativePath != null) && (relativePath != "")){
+					this.subdirectoryinput.text = chosenDir.name;
+					makeDirty();
+				} else {
+					mx.controls.Alert.show("Error! The directory must be a subdirectory of the WWKiosk directory, " + mainConfigDirPath);
+				}
 			}
 			
 			// Video File
 			private function doChooseVideoFile(event:Event):void {
-				var selectedSite:SiteVO = lstSites.selectedItem as SiteVO;
-				var sourceDir:String = mainConfigDirPath + File.separator + selectedSite.sourceDir;
-				var fileChooser:File = new File(sourceDir);
+				var fileChooser:File = new File(sourcePathForSelectedSite);
 				var vidFilter:FileFilter = new FileFilter("Video File", "*.mov;*.mp4;*.flv;");
 				
 				try {
@@ -174,9 +188,17 @@
 			}
 			
 			private function addVideoPathToTextInput(event:Event):void {
+				// Make sure the chosen file is in the chosen subdirectory
 				var chosenFile:File = event.target as File;
-				this.videopathinput.text = chosenFile.nativePath;
-				makeDirty();
+				var configDir:File = new File(sourcePathForSelectedSite);
+				var relativePath:String = configDir.getRelativePath(chosenFile, false);
+				
+				if (relativePath == chosenFile.name){
+					this.videopathinput.text = chosenFile.nativePath;
+					makeDirty();
+				} else {
+					mx.controls.Alert.show("Error! The video file must be in this site's directory, " + sourcePathForSelectedSite);
+				}
 			}
 		]]>
 	</mx:Script>

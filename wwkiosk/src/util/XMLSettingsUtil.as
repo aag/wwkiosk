@@ -69,12 +69,15 @@ package util
 		public static function loadSiteDirs():void{
 			for each (var site:SiteVO in KioskModelLocator.getInstance().sites){
 				var sourceDir:File = new File(mainConfigDirPath + site.sourceDir);
-				var allFiles:Array = sourceDir.getDirectoryListing();
-				site.galleryImagePaths = new ArrayCollection();
-				for each (var file:File in allFiles){
-					var imagesRegExp:RegExp = new RegExp("\.(jpg|gif|jpeg|png|swf)$", "i");
-					if (file.name.match(imagesRegExp) && (file.nativePath != site.profileImagePath)){
-						site.galleryImagePaths.addItem(file.nativePath);
+				
+				if (sourceDir.exists){
+					var allFiles:Array = sourceDir.getDirectoryListing();
+					site.galleryImagePaths = new ArrayCollection();
+					for each (var file:File in allFiles){
+						var imagesRegExp:RegExp = new RegExp("\.(jpg|gif|jpeg|png|swf)$", "i");
+						if (file.name.match(imagesRegExp) && (file.nativePath != site.profileImagePath)){
+							site.galleryImagePaths.addItem(file.nativePath);
+						}
 					}
 				}
 			}
@@ -104,8 +107,14 @@ package util
 					}
 				}
 				
-				var profileImageFile:File = new File(site.profileImagePath);
-				var profileImageName:String = profileImageFile.name;
+				var profileImageName:String = "";
+				
+				if ((site.profileImagePath != null) && (site.profileImagePath != "")){
+					var profileImageFile:File = new File(site.profileImagePath);
+					if ((profileImageFile != null) && (profileImageFile.exists)){
+						profileImageName = profileImageFile.name;
+					}
+				}
 				
 				var siteXML:XML = 
 					<site>
