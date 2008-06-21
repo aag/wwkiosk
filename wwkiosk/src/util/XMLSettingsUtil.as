@@ -20,6 +20,9 @@ package util
 		// Hardcoded name of the config file.
 		private static const configFileName:String = "sites.xml";
 		
+		// Name of the image file that says "No images for this location."
+		private static const noImagesFilePath:String = "images/no_images.png";
+		
 		private static function get mainConfigDirPath():String {
 			return File.documentsDirectory.resolvePath(configDirName).nativePath + File.separator;
 		}
@@ -69,16 +72,22 @@ package util
 		public static function loadSiteDirs():void{
 			for each (var site:SiteVO in KioskModelLocator.getInstance().sites){
 				var sourceDir:File = new File(mainConfigDirPath + site.sourceDir);
+				site.galleryImagePaths = new ArrayCollection();
 				
-				if (sourceDir.exists){
+				if ((site.sourceDir != "") && sourceDir.exists){
 					var allFiles:Array = sourceDir.getDirectoryListing();
-					site.galleryImagePaths = new ArrayCollection();
+					
 					for each (var file:File in allFiles){
 						var imagesRegExp:RegExp = new RegExp("\.(jpg|gif|jpeg|png|swf)$", "i");
 						if (file.name.match(imagesRegExp) && (file.nativePath != site.profileImagePath)){
 							site.galleryImagePaths.addItem(file.nativePath);
 						}
 					}
+				}
+				
+				// Add the "no images" message if there weren't any other images.
+				if (site.galleryImagePaths.length == 0) {
+					site.galleryImagePaths.addItem(noImagesFilePath);
 				}
 			}
 		}
