@@ -25,21 +25,21 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 package views.components
 {
-	import mx.core.UIComponent;
-	import flash.geom.Matrix;
-	import flash.display.Sprite;
-	import flash.display.Shape;
-	import flash.display.Graphics;
-	import flash.events.Event;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
-	import flash.display.GradientType;
-	import flash.geom.Rectangle;
-	import flash.geom.Point;
-	import flash.display.DisplayObject;
 	import flash.display.CapsStyle;
-	import flash.display.LineScaleMode;
+	import flash.display.DisplayObject;
+	import flash.display.GradientType;
+	import flash.display.Graphics;
 	import flash.display.JointStyle;
+	import flash.display.LineScaleMode;
+	import flash.display.Shape;
+	import flash.events.Event;
+	import flash.geom.Matrix;
+	import flash.geom.Point;
+	import flash.geom.Rectangle;
+	
+	import mx.core.UIComponent;
 	import mx.events.FlexEvent;
 
 	/*	by defining a default property, we are allowing a developer to use our component and specify the value of this property as the 
@@ -117,6 +117,7 @@ package views.components
 		// usually prime candidates for turning into styles.
 		private static const kPerspective:Number = .15;
 		private static const kFalloff:Number = .4;
+		private static const kDefaultMaxHeight:int = 400;
 
 
 		//---------------------------------------------------------------------------------------
@@ -143,6 +144,9 @@ package views.components
 		private var _verticalShearEffect:Number;
 		// how much we scale down our content based on the current actual angle.
 		private var _horizontalScale:Number;
+		// the tallest an image can be.  scale down to this size if we're given an image
+		// that's larger.
+		private var _maxImageHeight:int = kDefaultMaxHeight;
 		//---------------------------------------------------------------------------------------
 		// properties
 		//---------------------------------------------------------------------------------------
@@ -215,6 +219,14 @@ package views.components
 			_actualAngle = value;
 			invalidateDisplayList();
 		}
+		
+		public function get maxImageHeight():int {
+			return _maxImageHeight;
+		}
+		
+		public function set maxImageHeight(newHeight:int):void {
+			_maxImageHeight = newHeight;
+		}
 
 
 		//---------------------------------------------------------------------------------------
@@ -270,6 +282,17 @@ package views.components
 			{
 				var contentWidth:Number = _content.getExplicitOrMeasuredWidth();
 				var contentHeight:Number= _content.getExplicitOrMeasuredHeight();
+								
+				if (contentHeight > _maxImageHeight) {
+					var newWidth:int = (_maxImageHeight * contentWidth) / contentHeight;
+					
+					_content.height = _maxImageHeight;
+					contentHeight = _content.getExplicitOrMeasuredHeight();
+					
+					_content.width = newWidth;
+					contentWidth = _content.getExplicitOrMeasuredWidth();;
+				}
+				
 				var centerX:Number = unscaledWidth/2;
 
 				/* 	first calculate some values based on our current angle, and the size of our content.
