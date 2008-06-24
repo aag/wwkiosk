@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <components:SmoothImage xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:components="views.components.*"
-	source="images/pin_with_shadow.png" useHandCursor="true" buttonMode="true" mouseChildren="false" click="doClick(event)">
+	source="images/pushpin.png" useHandCursor="true" buttonMode="true" mouseChildren="false" click="doClick(event)">
 	<mx:Script>
 		<![CDATA[
 			import mx.core.Application;
