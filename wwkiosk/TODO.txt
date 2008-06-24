@@ -1,4 +1,3 @@
-o Fix pin graphic (shadow direction, little transparency problems).
 o Profile story component.
     - Fix the resize bug (back burner)
 o Admin interface.

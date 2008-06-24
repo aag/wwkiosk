@@ -13,6 +13,7 @@
     		import mx.core.Application;
 	
 			private static const HIGHLIGHT_DELAY:int = 3000;
+			private static const EXIT_TIMEOUT:int = 5000;
 	
 			[Embed(source="images/continents.svg")]
 			[Bindable]
@@ -25,6 +26,9 @@
 			private var newPin:SitePin;
 			private var newPinSite:SiteVO;
 			private var pinHasBeenMoved:Boolean = false;
+			
+			private var exitTimer:Timer;
+			private var exitClicks:Array;
 			
 			private function doCreationComplete(event:Event):void {
 				// The default mode is site navigation, so only show the pin placement
@@ -149,8 +153,41 @@
 				}
 			}
 			
+			public function doExitButtonClick(event:MouseEvent):void {
+				if (exitTimer == null) {
+					exitTimer = new Timer(EXIT_TIMEOUT, 1);
+					exitClicks = new Array(0);
+				}
+				
+				// Set up for a new click combo
+				if (!exitTimer.running) {
+					exitClicks = new Array(0);
+					
+					exitTimer.reset();
+					exitTimer.start();
+					exitTimer.addEventListener( "timer" , exitTimerEnd );
+				}
+
+				if (event.currentTarget == leftExitButton) {
+					exitClicks.push("left");
+				} else if (event.currentTarget == rightExitButton) {
+					exitClicks.push("right");
+				}
+			}
+			
+			private function exitTimerEnd(event:TimerEvent):void {
+				if ((exitClicks.length == 3) &&
+					(exitClicks[0] == "right") &&
+					(exitClicks[1] == "right") &&
+					(exitClicks[2] == "left")) {
+						Application.application.exit();
+				}
+			}
 		]]>
 	</mx:Script>
+	
 	<mx:Image source="{map}" width="100%" left="0" right="0" click="doMapClick(event)" maintainAspectRatio="true" scaleContent="true" scaleY="1.4" scaleX="1.4" verticalAlign="middle" horizontalAlign="center"/>
 	<mx:Button id="placementFinishedButton" click="returnToAdmin(event)" top="30" right="10" icon="@Embed(source='images/checkmark.png')" />
+	<mx:Image id="leftExitButton" source="images/clear_square.png" click="doExitButtonClick(event)" left="0" bottom="0" />
+	<mx:Image id="rightExitButton" source="images/clear_square.png" click="doExitButtonClick(event)" right="0" bottom="0" />
 </mx:Canvas>
