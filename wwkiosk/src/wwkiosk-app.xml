@@ -21,13 +21,13 @@
 	<filename>wwkiosk</filename>
 
 	<!-- The name that is displayed in the AIR application installer. Optional. -->
-	<!-- <name></name> -->
+	<name>World Wide Kiosk</name>
 
 	<!-- An application version designator (such as "v1", "2.5", or "Alpha 1"). Required. -->
-	<version>v1</version>
+	<version>0.5</version>
 
 	<!-- Description, displayed in the AIR application installer. Optional. -->
-	<!-- <description></description> -->
+	<description>World Wide Kiosk is an application to show sites around the world.</description>
 
 	<!-- Copyright information. Optional -->
 	<!-- <copyright></copyright> -->
@@ -131,5 +131,4 @@
 		<!-- </fileType> -->
 	<!-- </fileTypes> -->
 
-<name>wwkiosk2</name>
 </application>
