@@ -38,8 +38,8 @@
 		<mx:HBox width="100%" height="100%">
 			<components:SmoothImage source="{site.profileImagePath}" width="120" />
 			<mx:VBox width="100%" height="100%">
-				<mx:Label fontSize="16" fontWeight="bold" text="{site.people.names}" />
-				<mx:Label fontSize="12" text="{site.locationName}" />
+				<mx:Text fontSize="16" width="100%" fontWeight="bold" text="{site.people.names}" />
+				<mx:Text fontSize="12" width="100%" text="{site.locationName}" />
 			</mx:VBox>
 		</mx:HBox>
 	</mx:VBox>

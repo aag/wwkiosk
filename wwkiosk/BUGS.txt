@@ -1,4 +1,3 @@
-o Person names do not wrap on site highlights
 o Strange Zoom/Resolution/Calibration problem
 o No message informing the user when there is no video for a site
 o Exiting the Admin window without saving will discard changes without prompting
