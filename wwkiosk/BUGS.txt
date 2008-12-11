@@ -1,0 +1,9 @@
+o Person names do not wrap on site highlights
+o Strange Zoom/Resolution/Calibration problem
+o No message informing the user when there is no video for a site
+o Exiting the Admin window without saving will discard changes without prompting
+o The map doesn't scale correctly at any resolution besides the HHBC kiosk's native resolution
+o The pin locations are pixel based, so changing the resolution will change their location on the map.
+o The site highlights should look like speech bubbles (or like Google Maps' bubbles) instead of just a rounded rectangle.
+o If two sites are very close together, you have to wait for the site highlight to appear to select one of them.
+o The text columns on the text page of the sites are a buggy hack. Replace the current implementation with the new Text Layout Framework.
