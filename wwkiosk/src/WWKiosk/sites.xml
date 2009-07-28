@@ -36,21 +36,4 @@
             </story>
 		</people>
 	</site>
-	<site>
-		<locationName>Australia</locationName>
-		<xPosition>800</xPosition>
-		<yPosition>400</yPosition>
-		<sourceDir>OHOLYJESUS</sourceDir>
-		<profileImage>Barzoni-Black-Jesus-Montage-Vincent-Barzoni.jpeg</profileImage>
-        <videoFile>jesus_the_musical.flv</videoFile>
-		<people>
-			<names>Jesus</names>
-			<story>
-            Jesus (7–2 BC/BCE to 26–36 AD/CE), also known as Jesus of Nazareth (or Jesus the Nazarene), was a 1st century Jewish teacher who is the central figure of Christianity, and is also an important figure in several other religions. He is also called Jesus Christ, where "Christ" is a title derived from the Greek Χριστός (Christós), meaning the "Anointed One," which corresponds to the Hebrew-derived "Messiah". The name "Jesus" is an anglicization of the Greek Ίησους (Iēsous), itself a Hellenization of the Hebrew יהושע (Yehoshua) or Hebrew-Aramaic ישוע (Yeshua), meaning "YHWH rescues".
-            The main sources of information regarding Jesus' life and teachings are the four canonical Gospels of the New Testament: Matthew, Mark, Luke, and John. Most scholars in the fields of history and biblical studies agree that Jesus was a Galilean Jew, was regarded as a teacher and healer, was baptized by John the Baptist, and was crucified in Jerusalem on orders of the Roman Governor Pontius Pilate on the charge of sedition against the Roman Empire. Few critical scholars believe that all ancient texts on Jesus' life are either completely accurate or completely inaccurate.
-            Christian views of Jesus (see also Christology) center on the belief that Jesus is Divine and is the Messiah whose coming was promised in the Old Testament and that he was resurrected after his crucifixion. Christians predominantly believe that Jesus is God incarnate, who came to provide salvation and reconciliation with God. Other Christian beliefs include Jesus' virgin birth, performance of miracles, fulfillment of biblical prophecy, ascension into Heaven, and future Second Coming. Nontrinitarianism profess various other interpretations regarding his divinity (see below).
-            In Islam, Jesus (Arabic: عيسى‎, commonly transliterated as Isa) is considered one of God's important prophets, a bringer of scripture, a worker of miracles, and the Messiah. Muslims, however believe Jesus was not divine and not crucified, but ascended bodily to heaven.
-            </story>
-		</people>
-	</site>
 </sites>
